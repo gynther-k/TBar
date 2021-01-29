@@ -19,6 +19,8 @@ public class MainPerfectFL {
 	private static Granularity granularity = Granularity.File;
 	
 	public static void main(String[] args) {
+
+		/*
 //		if (args.length != 4) {
 //			System.err.println("Arguments: \n"
 //					+ "\t<Bug_Data_Path>: the directory of checking out Defects4J bugs. \n"
@@ -47,10 +49,11 @@ public class MainPerfectFL {
 //			System.exit(0);
 		}
 		fixBug(bugDataPath, defects4jHome, bugId, isTestFixPatterns);
+		*/
 	}
 
 	public static void fixBug(String bugDataPath, String defects4jHome, String bugIdStr, boolean isTestFixPatterns) {
-		String[] elements = bugIdStr.split("_");
+		/*String[] elements = bugIdStr.split("_");
 		String projectName = elements[0];
 		int bugId;
 		try {
@@ -93,6 +96,8 @@ public class MainPerfectFL {
 			log.info("=======Partial succeeded to fix bug " + bugIdStr);
 			break;
 		}
+
+		*/
 	}
 
 }

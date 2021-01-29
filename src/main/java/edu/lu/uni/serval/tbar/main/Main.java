@@ -5,6 +5,7 @@ import java.io.File;
 import edu.lu.uni.serval.tbar.AbstractFixer;
 import edu.lu.uni.serval.tbar.TBarFixer;
 import edu.lu.uni.serval.tbar.config.Configuration;
+import java.util.ArrayList;
 
 /**
  * Fix bugs with Fault Localization results.
@@ -15,7 +16,7 @@ import edu.lu.uni.serval.tbar.config.Configuration;
 public class Main {
 	
 	public static void main(String[] args) {
-		if (args.length != 3) {
+		if (args.length < 3) {
 			System.err.println("Arguments: \n" 
 					+ "\t<Bug_Data_Path>: the directory of checking out Defects4J bugs. \n"
 					+ "\t<Bug_ID>: bug id of each Defects4J bug, such as Chart_1. \n"
@@ -27,11 +28,21 @@ public class Main {
 		String bugDataPath = args[0];// "../Defects4JData/"
 		String bugId = args[1]; // "Chart_1"
 		String defects4jHome = args[2]; // "../defects4j/"
+
+		ArrayList<String> pathsFromCmdLine = new ArrayList<String>(); //add paths manually
+		pathsFromCmdLine.add(args[3]);
+		pathsFromCmdLine.add(args[4]);
+		pathsFromCmdLine.add(args[5]);
+		pathsFromCmdLine.add(args[6]);
+
+		String pathToSuspCodeCmdLine = args[7];
+
+
 		System.out.println(bugId);
-		fixBug(bugDataPath, defects4jHome, bugId);
+		fixBug(bugDataPath, defects4jHome, bugId,pathsFromCmdLine,pathToSuspCodeCmdLine);
 	}
 
-	public static void fixBug(String bugDataPath, String defects4jHome, String bugIdStr) {
+	public static void fixBug(String bugDataPath, String defects4jHome, String bugIdStr,ArrayList<String> pathsFromCmdLine,String pathToSuspCodeCmdLine) {
 		Configuration.outputPath += "NormalFL/";
 		String suspiciousFileStr = Configuration.suspPositionsFilePath;
 		
@@ -45,10 +56,11 @@ public class Main {
 			return;
 		}
 		
-		AbstractFixer fixer = new TBarFixer(bugDataPath, projectName, bugId, defects4jHome);
+		AbstractFixer fixer = new TBarFixer(bugDataPath, projectName, bugId, defects4jHome,pathsFromCmdLine);
 		fixer.dataType = "TBar";
 		fixer.metric = Configuration.faultLocalizationMetric;
-		fixer.suspCodePosFile = new File(suspiciousFileStr);
+		fixer.suspCodePosFile = new File(pathToSuspCodeCmdLine); //new File("SuspiciousCodePositions/Lang_33/Ochiai.txt");
+		
 		if (Integer.MAX_VALUE == fixer.minErrorTest) {
 			System.out.println("Failed to defects4j compile bug " + bugIdStr);
 			return;

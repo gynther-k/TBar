@@ -9,10 +9,10 @@ public class PathUtils {
 
 	public static ArrayList<String> getSrcPath(String bugProject) {
 		ArrayList<String> path = new ArrayList<String>();
-		String[] words = bugProject.split("_");
-		String projectName = words[0];
-		int bugId = Integer.parseInt(words[1]);
-		if (projectName.equals("Math")) {
+		//String[] words = bugProject.split("_");
+		//String projectName = words[0];
+		//int bugId = Integer.parseInt(words[1]);
+		/*if (projectName.equals("Math")) {
 			if (bugId < 85) {
 				path.add("/target/classes/");
 				path.add("/target/test-classes/");
@@ -81,7 +81,7 @@ public class PathUtils {
 				path.add("/src/");
 				path.add("/test/");
 			}
-		}
+		}*/
 		return path;
 	}
 

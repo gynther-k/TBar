@@ -52,13 +52,13 @@ public class TBarFixer extends AbstractFixer {
 	
 	private static Logger log = LoggerFactory.getLogger(TBarFixer.class);
 	
-	public TBarFixer(String path, String projectName, int bugId, String defects4jPath) {
-		super(path, projectName, bugId, defects4jPath);
+	public TBarFixer(String path, String projectName, int bugId, String defects4jPath,ArrayList<String> pathsFromCmdLine) {
+		super(path, projectName, bugId, defects4jPath,pathsFromCmdLine);
 	}
 	
-	public TBarFixer(String path, String metric, String projectName, int bugId, String defects4jPath) {
+	/*public TBarFixer(String path, String metric, String projectName, int bugId, String defects4jPath) {
 		super(path, metric, projectName, bugId, defects4jPath);
-	}
+	}*/
 
 	@Override
 	public void fixProcess() {
@@ -224,7 +224,7 @@ public class TBarFixer extends AbstractFixer {
 	public List<SuspiciousPosition> readSuspiciousCodeFromFile() {
 		File suspiciousFile = null;
 		String suspiciousFilePath = "";
-		if (this.suspCodePosFile == null) {
+		/*if (this.suspCodePosFile == null) {
 			suspiciousFilePath = Configuration.suspPositionsFilePath;
 		} else {
 			suspiciousFilePath = this.suspCodePosFile.getPath();
@@ -237,7 +237,10 @@ public class TBarFixer extends AbstractFixer {
 		if (!suspiciousFile.exists()) {
 			System.out.println("Cannot find the suspicious code position file." + suspiciousFile.getPath());
 			suspiciousFile = new File(suspiciousFilePath + "/" + this.buggyProject + "/All.txt");
-		}
+		}*/
+
+		suspiciousFile = this.suspCodePosFile;
+		
 		if (!suspiciousFile.exists()) return null;
 		List<SuspiciousPosition> suspiciousCodeList = new ArrayList<>();
 		try {

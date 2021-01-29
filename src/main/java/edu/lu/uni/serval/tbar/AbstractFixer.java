@@ -68,7 +68,7 @@ public abstract class AbstractFixer implements IFixer {
 	
 	public boolean isTestFixPatterns = false;
 	
-	public AbstractFixer(String path, String projectName, int bugId, String defects4jPath) {
+	public AbstractFixer(String path, String projectName, int bugId, String defects4jPath,ArrayList<String> pathsFromCmdLine) {
 		this.path = path;
 		this.buggyProject = projectName + "_" + bugId;
 		fullBuggyProjectPath = path + buggyProject;
@@ -80,31 +80,35 @@ public abstract class AbstractFixer implements IFixer {
 		
 		TestUtils.checkout(this.fullBuggyProjectPath);
 //		if (FileHelper.getAllFiles(fullBuggyProjectPath + PathUtils.getSrcPath(buggyProject).get(0), ".class").isEmpty()) {
-			TestUtils.compileProjectWithDefects4j(fullBuggyProjectPath, defects4jPath);
+			//TestUtils.compileProjectWithDefects4j(fullBuggyProjectPath, defects4jPath);
 //		}
+		TestUtils.compileProject(fullBuggyProjectPath, defects4jPath);
 		minErrorTest = TestUtils.getFailTestNumInProject(fullBuggyProjectPath, defects4jPath, failedTestStrList);
-		if (minErrorTest == Integer.MAX_VALUE) {
-			TestUtils.compileProjectWithDefects4j(fullBuggyProjectPath, defects4jPath);
+		/*if (minErrorTest == Integer.MAX_VALUE) {
+			TestUtils.getFailTestNumInProject(fullBuggyProjectPath, defects4jPath, failedTestStrList);
 			minErrorTest = TestUtils.getFailTestNumInProject(fullBuggyProjectPath, defects4jPath, failedTestStrList);
-		}
+		}*/
+
 		log.info(buggyProject + " Failed Tests: " + this.minErrorTest);
 		minErrorTest_ = minErrorTest;
 		
 		// Read paths of the buggy project.
 		this.dp = new DataPreparer(path);
-		dp.prepareData(buggyProject);
+		dp.prepareData(buggyProject,pathsFromCmdLine);
+
+
 		
-		readPreviouslyFailedTestCases();
+		//readPreviouslyFailedTestCases();
 		
 //		createDictionary();
 	}
 
-	public AbstractFixer(String path, String metric, String projectName, int bugId, String defects4jPath) {
+	/*public AbstractFixer(String path, String metric, String projectName, int bugId, String defects4jPath) {
 		this(path, projectName, bugId, defects4jPath);
 		this.metric = metric;
-	}
+	}*/
 	
-	private void readPreviouslyFailedTestCases() {
+	/*private void readPreviouslyFailedTestCases() {
 		String[] failedTestCases = FileHelper.readFile(Configuration.failedTestCasesFilePath + this.buggyProject + ".txt").split("\n");
 		List<String> failedTestCasesList = new ArrayList<>();
 		List<String> failed = new ArrayList<>();
@@ -130,7 +134,7 @@ public abstract class AbstractFixer implements IFixer {
 		// FIXME: Using defects4j command in Java code may generate some new failed-passing test cases.
 		// We call them as fake failed-passing test cases.
 		this.fakeFailedTestCasesList.addAll(tempFailed);
-	}
+	}*/
 
 	@SuppressWarnings("unused")
 	private void createDictionary() {

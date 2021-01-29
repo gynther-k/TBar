@@ -20,6 +20,7 @@ import edu.lu.uni.serval.tbar.config.Configuration;
 public class ShellUtils {
 
 	public static String shellRun(List<String> asList, String buggyProject, int type) throws IOException {
+
 		String fileName;
         String cmd;
         if (System.getProperty("os.name").toLowerCase().startsWith("win")){
@@ -44,6 +45,7 @@ public class ShellUtils {
         try {
             outputStream = new FileOutputStream(batFile);
             for (String arg: asList){
+                System.out.println("arg"+arg);
                 outputStream.write(arg.getBytes());
             }
         } catch (IOException e){
@@ -52,7 +54,7 @@ public class ShellUtils {
             }
         }
         batFile.deleteOnExit();
-        
+        System.err.println("theCMD"+cmd);
         Process process= Runtime.getRuntime().exec(cmd);
         String results = ShellUtils.getShellOut(process, type);
         batFile.delete();
@@ -86,6 +88,7 @@ public class ShellUtils {
         } finally {
             shutdownProcess(service, process);
         }
+        //System.out.println("I SHELL OUT:"+returnString);
         return returnString;
 	}
 
