@@ -76,9 +76,28 @@ public class DataPreparer {
 		if (new File(projectDir + buggyProject + "/build/lib/").exists()) {
 			libPackages.addAll(FileHelper.getAllFiles(projectDir + buggyProject + "/build/lib/", ".jar"));
 		}
+		//New from aprorg TBar
+		if (new File(projectDir + buggyProject + "/build/libs/lib").exists()) {
+			libPackages.addAll(FileHelper.getAllFiles(projectDir + buggyProject + "/build/libs/lib", ".jar"));
+		}
+		if (new File(projectDir + buggyProject + "/target/dependency/").exists()) {
+			libPackages.addAll(FileHelper.getAllFiles(projectDir + buggyProject + "/target/dependency/", ".jar"));
+			System.err.println("libPackages Exist");
+		}
+		
+		//System.out.println("projectDir: "+projectDir+"buggyProject: "+buggyProject);
+
+		if (new File(projectDir + buggyProject + "/target/lib").exists()) {
+			libPackages.addAll(FileHelper.getAllFiles(projectDir + buggyProject + "/target/lib/", ".jar"));
+			//System.err.println("libPackages Exist");
+		}
+
 		for (File libPackage : libPackages) {
+			//System.err.println("libpackages add"+libPackage);
 			libPaths.add(libPackage.getAbsolutePath());
 		}
+		//System.err.println("Slutar");
+		//System.exit(0);
 	}
 	
 	private boolean checkProjectDirectories() {

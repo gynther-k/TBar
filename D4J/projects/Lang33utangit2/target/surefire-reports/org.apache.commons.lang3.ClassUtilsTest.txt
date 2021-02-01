@@ -1,8 +1,8 @@
 -------------------------------------------------------------------------------
 Test set: org.apache.commons.lang3.ClassUtilsTest
 -------------------------------------------------------------------------------
-Tests run: 46, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.017 sec <<< FAILURE!
-testToClass_object(org.apache.commons.lang3.ClassUtilsTest)  Time elapsed: 0.001 sec  <<< ERROR!
+Tests run: 46, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.016 sec <<< FAILURE!
+testToClass_object(org.apache.commons.lang3.ClassUtilsTest)  Time elapsed: 0.002 sec  <<< ERROR!
 java.lang.NullPointerException
 	at org.apache.commons.lang3.ClassUtils.toClass(ClassUtils.java:910)
 	at org.apache.commons.lang3.ClassUtilsTest.testToClass_object(ClassUtilsTest.java:911)

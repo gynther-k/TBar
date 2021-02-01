@@ -81,10 +81,13 @@ public class TBarFixer extends AbstractFixer {
 		if (suspiciousCodeList == null) return;
 		
 		List<SuspCodeNode> triedSuspNode = new ArrayList<>();
-		log.info("=======TBar: Start to fix suspicious code======");
+		log.info("=======TBar: Start to fix suspicious code====== "+"List with:"+suspiciousCodeList.size());
 		for (SuspiciousPosition suspiciousCode : suspiciousCodeList) {
 			List<SuspCodeNode> scns = parseSuspiciousCode(suspiciousCode);
+
 			if (scns == null) continue;
+			System.err.println("scns: "+scns.size());
+
 
 			for (SuspCodeNode scn : scns) {
 //				log.debug(scn.suspCodeStr);

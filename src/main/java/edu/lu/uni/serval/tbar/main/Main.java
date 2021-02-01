@@ -37,7 +37,7 @@ public class Main {
 		String pathToSuspCodeCmdLine = args[6];
 		String projecWithoutGit = args[7];
 
-		if(projecWithoutGit.equals("no_git"))
+		if(projecWithoutGit.equals("nogit"))
 		{
 			Configuration.NO_GIT=true;
 		}

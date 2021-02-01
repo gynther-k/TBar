@@ -5,7 +5,7 @@ Bundle-Description: Commons Lang, a package of Java utility classes fo
 Bundle-License: http://www.apache.org/licenses/LICENSE-2.0.txt
 Bundle-SymbolicName: org.apache.commons.lang
 Bundle-ManifestVersion: 2
-Bnd-LastModified: 1612180120548
+Bnd-LastModified: 1612186195298
 Bundle-DocURL: http://commons.apache.org/lang/
 Bundle-Vendor: The Apache Software Foundation
 Import-Package: org.apache.commons.lang3;version="3.0.0.SNAPSHOT",org.

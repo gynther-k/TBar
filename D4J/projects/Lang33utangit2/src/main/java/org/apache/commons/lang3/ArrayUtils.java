@@ -245,7 +245,10 @@ public class ArrayUtils {
                         + "', is neither of type Map.Entry nor an Array");
             }
         }
-        return map;
+        if (map == null) {
+	    return null;
+	}
+return map;
     }
 
     // Generic array

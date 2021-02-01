@@ -79,7 +79,7 @@ Tests run: 1670, Failures: 12, Errors: 1, Skipped: 0
         while ((st = br.readLine()) != null)
         {
             lineCount++;
-            //System.err.println(st); 
+            System.err.println(st); 
 
             //Failed tests
             if(readFailedtests && !st.trim().isEmpty()) //2. Read the lines
@@ -111,9 +111,12 @@ Tests run: 1670, Failures: 12, Errors: 1, Skipped: 0
                 String[] splittedStringsE = st.trim().split("\\(");
                 System.err.println(splittedStringsE[0]);
                 System.err.println(splittedStringsE[1]);
+                String[] splittedStringsClassE = splittedStringsE[1].trim().split("\\)");
+
                 
                 String testIndividualE = splittedStringsE[0];
-                String testClassE = splittedStringsE[1].replaceAll("[()]", "");
+                //String testClassE = splittedStringsE[1].replaceAll("[()]", "");
+                String testClassE = splittedStringsClassE[0].trim();
 
                 System.err.println(testIndividualE);
                 System.err.println(testClassE);
@@ -266,31 +269,55 @@ Tests run: 1670, Failures: 12, Errors: 1, Skipped: 0
 
     private static String getProjectResultCompile(String projectName, String cmdType) {
 		try {
-			String buggyProject = projectName.substring(projectName.lastIndexOf("/") + 1);
-			//which java\njava -version\n
+            String buggyProject = projectName.substring(projectName.lastIndexOf("/") + 1);
+            String result=null;
+            if(Configuration.bugDataSet.equals("d4j"))
+            {
+            
+            //which java\njava -version\n
 //          String result = ShellUtils.shellRun(Arrays.asList("cd " + projectName + "\n", defects4jPath + "framework/bin/defects4j " + cmdType + "\n"), buggyProject, cmdType.equals("test") ? 2 : 1);//"defects4j " + cmdType + "\n"));//
-            String result = ShellUtils.shellRun(Arrays.asList("cd " + projectName + "\n", "mvn -Dmaven.test.skip clean install"), buggyProject, cmdType.equals("test") ? 2 : 1);//"defects4j " + cmdType + "\n"));//
+            result = ShellUtils.shellRun(Arrays.asList("cd " + projectName + "\n", "mvn -Dmaven.test.skip clean install"), buggyProject, cmdType.equals("test") ? 2 : 1);//"defects4j " + cmdType + "\n"));//
             //System.exit(0);
+            }
+            if(Configuration.bugDataSet.equals("bears"))
+            {
+            result = ShellUtils.shellRun(Arrays.asList("cd " + projectName + "\n", "mvn -V -B -DskipTests=true -Denforcer.skip=true -Dcheckstyle.skip=true -Dcobertura.skip=true -DskipITs=true -Drat.skip=true -Dlicense.skip=true -Dfindbugs.skip=true -Dgpg.skip=true -Dskip.npm=true -Dskip.gulp=true -Dskip.bower=true clean install"), buggyProject, cmdType.equals("test") ? 2 : 1);//"defects4j " + cmdType + "\n"));//
+            }
+
             return result.trim();
         } catch (IOException e){
         	e.printStackTrace();
             return "";
         }
     }
-
+//mvn -V -B -Denforcer.skip=true -Dcheckstyle.skip=true -Dcobertura.skip=true -DskipITs=true -Drat.skip=true -Dlicense.skip=true -Dfindbugs.skip=true -Dgpg.skip=true -Dskip.npm=true -Dskip.gulp=true -Dskip.bower=true test
     private static String getProjectResultTest(String projectName, String cmdType) {
 		try {
 			String buggyProject = projectName.substring(projectName.lastIndexOf("/") + 1);
 			//which java\njava -version\n                                                                                                 //buggyProject will be the name of tempfile.sh
             //String result = ShellUtils.shellRun(Arrays.asList("cd " + projectName + "\n", defects4jPath + "framework/bin/defects4j " + cmdType + "\n"), buggyProject, cmdType.equals("test") ? 2 : 1);//"defects4j " + cmdType + "\n"));//
-            System.err.println("cd " + projectName );
-            String result = ShellUtils.shellRun(Arrays.asList("cd " + projectName + "\n", "mvn -Dsurefire.junit4.upgradecheck -Dsurefire.rerunFailingTestsCount=3 test | tee "+Configuration.GLOBAL_TEMP_FILES_PATH+"testOutPut.txt"+" -a"), buggyProject, cmdType.equals("test") ? 2 : 1);//"defects4j " + cmdType + "\n"));//
+            //System.err.println("cd " + projectName );
+            String result=null;
+            if(Configuration.bugDataSet.equals("d4j"))
+            {
+            result = ShellUtils.shellRun(Arrays.asList("cd " + projectName + "\n", "mvn -Dsurefire.junit4.upgradecheck -Dsurefire.rerunFailingTestsCount=3 test | tee "+Configuration.GLOBAL_TEMP_FILES_PATH+"testOutPut.txt"+" -a"), buggyProject, cmdType.equals("test") ? 2 : 1);//"defects4j " + cmdType + "\n"));//
             //String result = ShellUtils.shellRun(Arrays.asList("cd " + projectName + "\n", "mvn -Dsurefire.junit4.upgradecheck -Dsurefire.rerunFailingTestsCount=3 test | tee testOutput.txt -a"), buggyProject, cmdType.equals("test") ? 2 : 1);//"defects4j " + cmdType + "\n"));//
             
             //String result = ShellUtils.shellRun(Arrays.asList("cd " + projectName + "\n", "mvn -Dsurefire.junit4.upgradecheck -Dsurefire.rerunFailingTestsCount=2 test"), buggyProject, cmdType.equals("test") ? 2 : 1);//"defects4j " + cmdType + "\n"));//
             //System.err.println("without trim:" + result);
 
             //mvn -Dsurefire.junit4.upgradecheck -Dsurefire.rerunFailingTestsCount=2 test
+            }
+
+            if(Configuration.bugDataSet.equals("bears"))
+            {
+            
+            result = ShellUtils.shellRun(Arrays.asList("cd " + projectName + "\n", "mvn -V -B -Denforcer.skip=true -Dcheckstyle.skip=true -Dcobertura.skip=true -DskipITs=true -Drat.skip=true -Dlicense.skip=true -Dfindbugs.skip=true -Dgpg.skip=true -Dskip.npm=true -Dskip.gulp=true -Dskip.bower=true test | tee "+Configuration.GLOBAL_TEMP_FILES_PATH+"testOutPut.txt"+" -a"), buggyProject, cmdType.equals("test") ? 2 : 1);//"defects4j " + cmdType + "\n"));//
+
+            }
+
+
+            
             return result.trim();
         } catch (IOException e){
         	e.printStackTrace();

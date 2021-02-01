@@ -1,2 +1,2 @@
 cd D4J/projects/Lang33utangit2
-mvn -Dmaven.test.skip clean install
+mvn -Dsurefire.junit4.upgradecheck -Dsurefire.rerunFailingTestsCount=3 test | tee /tmp/testOutPut.txt -a
