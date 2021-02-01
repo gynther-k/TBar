@@ -1,0 +1,269 @@
+diff --git a/D4J/projects/Lang_33 b/D4J/projects/Lang_33
+--- a/D4J/projects/Lang_33
++++ b/D4J/projects/Lang_33
+@@ -1 +1 @@
+-Subproject commit ba869c11290e438c737ce79f64d59b2d9e1b416a
++Subproject commit ba869c11290e438c737ce79f64d59b2d9e1b416a-dirty
+diff --git a/NormalFLTBarRunner.sh b/NormalFLTBarRunner.sh
+index 9486ff9..38554f5 100755
+--- a/NormalFLTBarRunner.sh
++++ b/NormalFLTBarRunner.sh
+@@ -2,11 +2,10 @@
+ 
+ bugDataPath=$1
+ bugID=$2
+-defects4jHome=$3
+-targetClasses=$4
+-targetTestClasses=$5
+-targetMainJava=$6
+-targetTestJava=$7
+-suspiciousCodeLoc=$8
++targetClasses=$3
++targetTestClasses=$4
++targetMainJava=$5
++targetTestJava=$6
++suspiciousCodeLoc=$7
+ 
+-java -Xmx1g -cp "target/dependency/*" edu.lu.uni.serval.tbar.main.Main $bugDataPath $bugID $defects4jHome $targetClasses $targetTestClasses $targetMainJava $targetTestJava $suspiciousCodeLoc
+\ No newline at end of file
++java -Xmx1g -cp "target/dependency/*" edu.lu.uni.serval.tbar.main.Main $bugDataPath $bugID $targetClasses $targetTestClasses $targetMainJava $targetTestJava $suspiciousCodeLoc
+\ No newline at end of file
+diff --git a/src/main/java/edu/lu/uni/serval/tbar/AbstractFixer.java b/src/main/java/edu/lu/uni/serval/tbar/AbstractFixer.java
+index 2a592ff..a56bb4f 100644
+--- a/src/main/java/edu/lu/uni/serval/tbar/AbstractFixer.java
++++ b/src/main/java/edu/lu/uni/serval/tbar/AbstractFixer.java
+@@ -68,11 +68,12 @@ public abstract class AbstractFixer implements IFixer {
+ 	
+ 	public boolean isTestFixPatterns = false;
+ 	
+-	public AbstractFixer(String path, String projectName, int bugId, String defects4jPath,ArrayList<String> pathsFromCmdLine) {
++	public AbstractFixer(String path, String bugIdStr, ArrayList<String> pathsFromCmdLine) {
+ 		this.path = path;
+-		this.buggyProject = projectName + "_" + bugId;
++		//this.buggyProject = projectName + "_" + bugId;
++		this.buggyProject = bugIdStr;
+ 		fullBuggyProjectPath = path + buggyProject;
+-		this.defects4jPath = defects4jPath;
++		//this.defects4jPath = defects4jPath;
+ //		int compileResult = TestUtils.compileProjectWithDefects4j(fullBuggyProjectPath, this.defects4jPath);
+ //      if (compileResult == 1) {
+ //      	log.debug(buggyProject + " ---Fixer: fix fail because of compile fail! ");
+@@ -82,8 +83,8 @@ public abstract class AbstractFixer implements IFixer {
+ //		if (FileHelper.getAllFiles(fullBuggyProjectPath + PathUtils.getSrcPath(buggyProject).get(0), ".class").isEmpty()) {
+ 			//TestUtils.compileProjectWithDefects4j(fullBuggyProjectPath, defects4jPath);
+ //		}
+-		TestUtils.compileProject(fullBuggyProjectPath, defects4jPath);
+-		minErrorTest = TestUtils.getFailTestNumInProject(fullBuggyProjectPath, defects4jPath, failedTestStrList);
++		TestUtils.compileProject(fullBuggyProjectPath);
++		minErrorTest = TestUtils.getFailTestNumInProject(fullBuggyProjectPath,failedTestStrList);
+ 		/*if (minErrorTest == Integer.MAX_VALUE) {
+ 			TestUtils.getFailTestNumInProject(fullBuggyProjectPath, defects4jPath, failedTestStrList);
+ 			minErrorTest = TestUtils.getFailTestNumInProject(fullBuggyProjectPath, defects4jPath, failedTestStrList);
+@@ -272,7 +273,8 @@ public abstract class AbstractFixer implements IFixer {
+ 				continue;
+ 			}
+ 			if (!scn.targetClassFile.exists()) { // fail to compile
+-				int results = (this.buggyProject.startsWith("Mockito") || this.buggyProject.startsWith("Closure") || this.buggyProject.startsWith("Time")) ? TestUtils.compileProjectWithDefects4j(fullBuggyProjectPath, defects4jPath) : 1;
++				//int results = (this.buggyProject.startsWith("Mockito") || this.buggyProject.startsWith("Closure") || this.buggyProject.startsWith("Time")) ? TestUtils.compileProjectWithDefects4j(fullBuggyProjectPath, defects4jPath) : 1;
++				int results = 1;
+ 				if (results == 1) {
+ 					log.debug(buggyProject + " ---Fixer: fix fail because of failed compiling! ");
+ 					continue;
+@@ -313,8 +315,7 @@ public abstract class AbstractFixer implements IFixer {
+ 			}
+ 
+ 			List<String> failedTestsAfterFix = new ArrayList<>();
+-			int errorTestAfterFix = TestUtils.getFailTestNumInProject(fullBuggyProjectPath, this.defects4jPath,
+-					failedTestsAfterFix);
++			int errorTestAfterFix = TestUtils.getFailTestNumInProject(fullBuggyProjectPath,failedTestsAfterFix);
+ 			failedTestsAfterFix.removeAll(this.fakeFailedTestCasesList);
+ 			
+ 			if (errorTestAfterFix < minErrorTest) {
+diff --git a/src/main/java/edu/lu/uni/serval/tbar/TBarFixer.java b/src/main/java/edu/lu/uni/serval/tbar/TBarFixer.java
+index a041c97..bd388c0 100644
+--- a/src/main/java/edu/lu/uni/serval/tbar/TBarFixer.java
++++ b/src/main/java/edu/lu/uni/serval/tbar/TBarFixer.java
+@@ -52,8 +52,8 @@ public class TBarFixer extends AbstractFixer {
+ 	
+ 	private static Logger log = LoggerFactory.getLogger(TBarFixer.class);
+ 	
+-	public TBarFixer(String path, String projectName, int bugId, String defects4jPath,ArrayList<String> pathsFromCmdLine) {
+-		super(path, projectName, bugId, defects4jPath,pathsFromCmdLine);
++	public TBarFixer(String path, String bugIdStr, ArrayList<String> pathsFromCmdLine) {
++		super(path,bugIdStr, pathsFromCmdLine);
+ 	}
+ 	
+ 	/*public TBarFixer(String path, String metric, String projectName, int bugId, String defects4jPath) {
+diff --git a/src/main/java/edu/lu/uni/serval/tbar/main/Main.java b/src/main/java/edu/lu/uni/serval/tbar/main/Main.java
+index 5902493..efeb7c5 100644
+--- a/src/main/java/edu/lu/uni/serval/tbar/main/Main.java
++++ b/src/main/java/edu/lu/uni/serval/tbar/main/Main.java
+@@ -27,40 +27,39 @@ public class Main {
+ 		}
+ 		String bugDataPath = args[0];// "../Defects4JData/"
+ 		String bugId = args[1]; // "Chart_1"
+-		String defects4jHome = args[2]; // "../defects4j/"
+ 
+ 		ArrayList<String> pathsFromCmdLine = new ArrayList<String>(); //add paths manually
++		pathsFromCmdLine.add(args[2]);
+ 		pathsFromCmdLine.add(args[3]);
+ 		pathsFromCmdLine.add(args[4]);
+ 		pathsFromCmdLine.add(args[5]);
+-		pathsFromCmdLine.add(args[6]);
+ 
+-		String pathToSuspCodeCmdLine = args[7];
++		String pathToSuspCodeCmdLine = args[6];
+ 
+ 
+ 		System.out.println(bugId);
+-		fixBug(bugDataPath, defects4jHome, bugId,pathsFromCmdLine,pathToSuspCodeCmdLine);
++		fixBug(bugDataPath, bugId,pathsFromCmdLine,pathToSuspCodeCmdLine);
+ 	}
+ 
+-	public static void fixBug(String bugDataPath, String defects4jHome, String bugIdStr,ArrayList<String> pathsFromCmdLine,String pathToSuspCodeCmdLine) {
++	public static void fixBug(String bugDataPath,String bugIdStr,ArrayList<String> pathsFromCmdLine,String pathToSuspCodeCmdLine) {
+ 		Configuration.outputPath += "NormalFL/";
+ 		String suspiciousFileStr = Configuration.suspPositionsFilePath;
+ 		
+-		String[] elements = bugIdStr.split("_");
+-		String projectName = elements[0];
+-		int bugId;
+-		try {
+-			bugId = Integer.valueOf(elements[1]);
+-		} catch (NumberFormatException e) {
+-			System.err.println("Please input correct buggy project ID, such as \"Chart_1\".");
+-			return;
+-		}
++		//String[] elements = bugIdStr.split("_");
++		//String projectName = elements[0];
++		//int bugId;
++		//try {
++		//	bugId = Integer.valueOf(elements[1]);
++		//} catch (NumberFormatException e) {
++		//	System.err.println("Please input correct buggy project ID, such as \"Chart_1\".");
++		//	return;
++		//}
+ 		
+-		AbstractFixer fixer = new TBarFixer(bugDataPath, projectName, bugId, defects4jHome,pathsFromCmdLine);
++		AbstractFixer fixer = new TBarFixer(bugDataPath, bugIdStr,pathsFromCmdLine);
+ 		fixer.dataType = "TBar";
+ 		fixer.metric = Configuration.faultLocalizationMetric;
+ 		fixer.suspCodePosFile = new File(pathToSuspCodeCmdLine); //new File("SuspiciousCodePositions/Lang_33/Ochiai.txt");
+-		
++
+ 		if (Integer.MAX_VALUE == fixer.minErrorTest) {
+ 			System.out.println("Failed to defects4j compile bug " + bugIdStr);
+ 			return;
+diff --git a/src/main/java/edu/lu/uni/serval/tbar/utils/TestUtils.java b/src/main/java/edu/lu/uni/serval/tbar/utils/TestUtils.java
+index 5836d76..1b9c48a 100644
+--- a/src/main/java/edu/lu/uni/serval/tbar/utils/TestUtils.java
++++ b/src/main/java/edu/lu/uni/serval/tbar/utils/TestUtils.java
+@@ -58,18 +58,16 @@ Tests run: 1670, Failures: 12, Errors: 1, Skipped: 0
+ 
+ */
+ 
+-	public static int getFailTestNumInProject(String projectName, String defects4jPath, List<String> failedTests){
++	public static int getFailTestNumInProject(String projectName, List<String> failedTests){
+         //String testResult = getDefects4jResult(projectName, defects4jPath, "test");
+         
+-        String testResult = getProjectResultTest(projectName, defects4jPath, "test");
++        String testResult = getProjectResultTest(projectName,"test");
+ 
+         try {
+         //File fileTestOutput = new File("/home/gynther/Desktop/thesisJan28LocalStartChange/TBar/D4J/projects/Lang_33/testOutput.txt"); 
+         File fileTestOutput = new File(Configuration.GLOBAL_TEMP_FILES_PATH+"testOutPut.txt"); 
+ 
+-        //fileName = Configuration.TEMP_FILES_PATH + buggyProject + ".sh";
+         BufferedReader br = new BufferedReader(new FileReader(fileTestOutput)); 
+-        //System.out.println("\n\n\n\n\n\n\n-----------------------------#################################################");
+         String st; 
+         List<String> failedTestCmdLine = new ArrayList<>();
+         List<String> errorTestCmdLine = new ArrayList<>();
+@@ -233,7 +231,7 @@ Tests run: 1670, Failures: 12, Errors: 1, Skipped: 0
+ //        return errorNum;
+ //	}
+ 	
+-	public static int compileProjectWithDefects4j(String projectName, String defects4jPath) {
++	/*public static int compileProjectWithDefects4j(String projectName, String defects4jPath) {
+ 		String compileResults = getDefects4jResult(projectName, defects4jPath, "compile");
+ 		String[] lines = compileResults.split("\n");
+ 		if (lines.length != 2) return 1;
+@@ -241,10 +239,10 @@ Tests run: 1670, Failures: 12, Errors: 1, Skipped: 0
+         	if (!lineString.endsWith("OK")) return 1;
+         }
+ 		return 0;
+-    }
++    }*/
+     
+-	public static int compileProject(String projectName, String defects4jPath) {
+-		String compileResults = getProjectResultCompile(projectName, defects4jPath, "compile");
++	public static int compileProject(String projectName) {
++		String compileResults = getProjectResultCompile(projectName,"compile");
+ 		String[] lines = compileResults.split("\n");
+ 		/*if (lines.length != 2) return 1;
+         for (String lineString: lines){
+@@ -254,7 +252,7 @@ Tests run: 1670, Failures: 12, Errors: 1, Skipped: 0
+ 	}
+ 
+ 
+-	private static String getDefects4jResult(String projectName, String defects4jPath, String cmdType) {
++	/*private static String getDefects4jResult(String projectName, String defects4jPath, String cmdType) {
+ 		try {
+ 			String buggyProject = projectName.substring(projectName.lastIndexOf("/") + 1);
+ 			//which java\njava -version\n
+@@ -264,9 +262,9 @@ Tests run: 1670, Failures: 12, Errors: 1, Skipped: 0
+         	e.printStackTrace();
+             return "";
+         }
+-    }
++    }*/
+ 
+-    private static String getProjectResultCompile(String projectName, String defects4jPath, String cmdType) {
++    private static String getProjectResultCompile(String projectName, String cmdType) {
+ 		try {
+ 			String buggyProject = projectName.substring(projectName.lastIndexOf("/") + 1);
+ 			//which java\njava -version\n
+@@ -280,7 +278,7 @@ Tests run: 1670, Failures: 12, Errors: 1, Skipped: 0
+         }
+     }
+ 
+-    private static String getProjectResultTest(String projectName, String defects4jPath, String cmdType) {
++    private static String getProjectResultTest(String projectName, String cmdType) {
+ 		try {
+ 			String buggyProject = projectName.substring(projectName.lastIndexOf("/") + 1);
+ 			//which java\njava -version\n                                                                                                 //buggyProject will be the name of tempfile.sh
+diff --git a/target/TBar-0.0.1-SNAPSHOT.jar b/target/TBar-0.0.1-SNAPSHOT.jar
+index acd8666..5a4cbbd 100644
+Binary files a/target/TBar-0.0.1-SNAPSHOT.jar and b/target/TBar-0.0.1-SNAPSHOT.jar differ
+diff --git a/target/classes/edu/lu/uni/serval/tbar/AbstractFixer$SuspCodeNode.class b/target/classes/edu/lu/uni/serval/tbar/AbstractFixer$SuspCodeNode.class
+index d574156..b373c13 100644
+Binary files a/target/classes/edu/lu/uni/serval/tbar/AbstractFixer$SuspCodeNode.class and b/target/classes/edu/lu/uni/serval/tbar/AbstractFixer$SuspCodeNode.class differ
+diff --git a/target/classes/edu/lu/uni/serval/tbar/AbstractFixer.class b/target/classes/edu/lu/uni/serval/tbar/AbstractFixer.class
+index 55cab31..ff9f022 100644
+Binary files a/target/classes/edu/lu/uni/serval/tbar/AbstractFixer.class and b/target/classes/edu/lu/uni/serval/tbar/AbstractFixer.class differ
+diff --git a/target/classes/edu/lu/uni/serval/tbar/TBarFixer.class b/target/classes/edu/lu/uni/serval/tbar/TBarFixer.class
+index bb2d889..ccadf4d 100644
+Binary files a/target/classes/edu/lu/uni/serval/tbar/TBarFixer.class and b/target/classes/edu/lu/uni/serval/tbar/TBarFixer.class differ
+diff --git a/target/classes/edu/lu/uni/serval/tbar/main/Main.class b/target/classes/edu/lu/uni/serval/tbar/main/Main.class
+index 71add3d..9281846 100644
+Binary files a/target/classes/edu/lu/uni/serval/tbar/main/Main.class and b/target/classes/edu/lu/uni/serval/tbar/main/Main.class differ
+diff --git a/target/classes/edu/lu/uni/serval/tbar/utils/TestUtils.class b/target/classes/edu/lu/uni/serval/tbar/utils/TestUtils.class
+index 29267d9..8fe217b 100644
+Binary files a/target/classes/edu/lu/uni/serval/tbar/utils/TestUtils.class and b/target/classes/edu/lu/uni/serval/tbar/utils/TestUtils.class differ
+diff --git a/target/dependency/TBar-0.0.1-SNAPSHOT.jar b/target/dependency/TBar-0.0.1-SNAPSHOT.jar
+index acd8666..5a4cbbd 100644
+Binary files a/target/dependency/TBar-0.0.1-SNAPSHOT.jar and b/target/dependency/TBar-0.0.1-SNAPSHOT.jar differ
+diff --git a/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst b/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst
+index 1042b67..ddd735a 100644
+--- a/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst
++++ b/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst
+@@ -71,9 +71,7 @@
+ /home/gynther/Desktop/thesisJan28LocalStartChange/TBar/src/main/java/edu/lu/uni/serval/tbar/dataprepare/DataPreparer.java
+ /home/gynther/Desktop/thesisJan28LocalStartChange/TBar/src/main/java/edu/lu/uni/serval/tbar/fixpatterns/ChangeCondition.java
+ /home/gynther/Desktop/thesisJan28LocalStartChange/TBar/src/main/java/edu/lu/uni/serval/tbar/fixpatterns/AlterMethodInvocation.java
+-/home/gynther/Desktop/thesisJan28LocalStartChange/TBar/src/main/java/edu/lu/uni/serval/tbar/main/Main_NFL.java
+ /home/gynther/Desktop/thesisJan28LocalStartChange/TBar/src/main/java/edu/lu/uni/serval/tbar/utils/CodeUtils.java
+-/home/gynther/Desktop/thesisJan28LocalStartChange/TBar/src/main/java/edu/lu/uni/serval/tbar/TBarFixer_NFL.java
+ /home/gynther/Desktop/thesisJan28LocalStartChange/TBar/src/main/java/edu/lu/uni/serval/tbar/dataprepare/TestFinder.java
+ /home/gynther/Desktop/thesisJan28LocalStartChange/TBar/src/main/java/edu/lu/uni/serval/tbar/utils/JavaLibrary.java
+ /home/gynther/Desktop/thesisJan28LocalStartChange/TBar/src/main/java/edu/lu/uni/serval/tbar/utils/PathUtils.java

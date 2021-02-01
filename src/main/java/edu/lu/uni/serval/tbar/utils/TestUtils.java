@@ -58,18 +58,16 @@ Tests run: 1670, Failures: 12, Errors: 1, Skipped: 0
 
 */
 
-	public static int getFailTestNumInProject(String projectName, String defects4jPath, List<String> failedTests){
+	public static int getFailTestNumInProject(String projectName, List<String> failedTests){
         //String testResult = getDefects4jResult(projectName, defects4jPath, "test");
         
-        String testResult = getProjectResultTest(projectName, defects4jPath, "test");
+        String testResult = getProjectResultTest(projectName,"test");
 
         try {
         //File fileTestOutput = new File("/home/gynther/Desktop/thesisJan28LocalStartChange/TBar/D4J/projects/Lang_33/testOutput.txt"); 
         File fileTestOutput = new File(Configuration.GLOBAL_TEMP_FILES_PATH+"testOutPut.txt"); 
 
-        //fileName = Configuration.TEMP_FILES_PATH + buggyProject + ".sh";
         BufferedReader br = new BufferedReader(new FileReader(fileTestOutput)); 
-        //System.out.println("\n\n\n\n\n\n\n-----------------------------#################################################");
         String st; 
         List<String> failedTestCmdLine = new ArrayList<>();
         List<String> errorTestCmdLine = new ArrayList<>();
@@ -233,7 +231,7 @@ Tests run: 1670, Failures: 12, Errors: 1, Skipped: 0
 //        return errorNum;
 //	}
 	
-	public static int compileProjectWithDefects4j(String projectName, String defects4jPath) {
+	/*public static int compileProjectWithDefects4j(String projectName, String defects4jPath) {
 		String compileResults = getDefects4jResult(projectName, defects4jPath, "compile");
 		String[] lines = compileResults.split("\n");
 		if (lines.length != 2) return 1;
@@ -241,10 +239,10 @@ Tests run: 1670, Failures: 12, Errors: 1, Skipped: 0
         	if (!lineString.endsWith("OK")) return 1;
         }
 		return 0;
-    }
+    }*/
     
-	public static int compileProject(String projectName, String defects4jPath) {
-		String compileResults = getProjectResultCompile(projectName, defects4jPath, "compile");
+	public static int compileProject(String projectName) {
+		String compileResults = getProjectResultCompile(projectName,"compile");
 		String[] lines = compileResults.split("\n");
 		/*if (lines.length != 2) return 1;
         for (String lineString: lines){
@@ -254,7 +252,7 @@ Tests run: 1670, Failures: 12, Errors: 1, Skipped: 0
 	}
 
 
-	private static String getDefects4jResult(String projectName, String defects4jPath, String cmdType) {
+	/*private static String getDefects4jResult(String projectName, String defects4jPath, String cmdType) {
 		try {
 			String buggyProject = projectName.substring(projectName.lastIndexOf("/") + 1);
 			//which java\njava -version\n
@@ -264,9 +262,9 @@ Tests run: 1670, Failures: 12, Errors: 1, Skipped: 0
         	e.printStackTrace();
             return "";
         }
-    }
+    }*/
 
-    private static String getProjectResultCompile(String projectName, String defects4jPath, String cmdType) {
+    private static String getProjectResultCompile(String projectName, String cmdType) {
 		try {
 			String buggyProject = projectName.substring(projectName.lastIndexOf("/") + 1);
 			//which java\njava -version\n
@@ -280,7 +278,7 @@ Tests run: 1670, Failures: 12, Errors: 1, Skipped: 0
         }
     }
 
-    private static String getProjectResultTest(String projectName, String defects4jPath, String cmdType) {
+    private static String getProjectResultTest(String projectName, String cmdType) {
 		try {
 			String buggyProject = projectName.substring(projectName.lastIndexOf("/") + 1);
 			//which java\njava -version\n                                                                                                 //buggyProject will be the name of tempfile.sh
@@ -314,7 +312,14 @@ Tests run: 1670, Failures: 12, Errors: 1, Skipped: 0
 	public static String readPatch(String projectName) {
 		try {
 			String buggyProject = projectName.substring(projectName.lastIndexOf("/") + 1);
-            return ShellUtils.shellRun(Arrays.asList("cd " + projectName + "\n", "git diff"), buggyProject, 1).trim();
+            //return ShellUtils.shellRun(Arrays.asList("cd " + projectName + "\n", "git diff"), buggyProject, 1).trim();
+            if(!Configuration.NO_GIT)
+            {
+                return ShellUtils.shellRun(Arrays.asList("cd " + projectName + "\n", "git diff"), buggyProject, 1).trim();
+            }
+            else{
+                return null;
+            }
         } catch (IOException e){
             return null;
         }

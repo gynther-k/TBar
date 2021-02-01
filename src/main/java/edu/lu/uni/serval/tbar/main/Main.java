@@ -27,40 +27,45 @@ public class Main {
 		}
 		String bugDataPath = args[0];// "../Defects4JData/"
 		String bugId = args[1]; // "Chart_1"
-		String defects4jHome = args[2]; // "../defects4j/"
 
 		ArrayList<String> pathsFromCmdLine = new ArrayList<String>(); //add paths manually
+		pathsFromCmdLine.add(args[2]);
 		pathsFromCmdLine.add(args[3]);
 		pathsFromCmdLine.add(args[4]);
 		pathsFromCmdLine.add(args[5]);
-		pathsFromCmdLine.add(args[6]);
 
-		String pathToSuspCodeCmdLine = args[7];
+		String pathToSuspCodeCmdLine = args[6];
+		String projecWithoutGit = args[7];
+
+		if(projecWithoutGit.equals("no_git"))
+		{
+			Configuration.NO_GIT=true;
+		}
 
 
 		System.out.println(bugId);
-		fixBug(bugDataPath, defects4jHome, bugId,pathsFromCmdLine,pathToSuspCodeCmdLine);
+		fixBug(bugDataPath, bugId,pathsFromCmdLine,pathToSuspCodeCmdLine);
 	}
 
-	public static void fixBug(String bugDataPath, String defects4jHome, String bugIdStr,ArrayList<String> pathsFromCmdLine,String pathToSuspCodeCmdLine) {
+	public static void fixBug(String bugDataPath,String bugIdStr,ArrayList<String> pathsFromCmdLine,String pathToSuspCodeCmdLine) {
 		Configuration.outputPath += "NormalFL/";
 		String suspiciousFileStr = Configuration.suspPositionsFilePath;
 		
-		String[] elements = bugIdStr.split("_");
-		String projectName = elements[0];
-		int bugId;
-		try {
-			bugId = Integer.valueOf(elements[1]);
-		} catch (NumberFormatException e) {
-			System.err.println("Please input correct buggy project ID, such as \"Chart_1\".");
-			return;
-		}
+		//String[] elements = bugIdStr.split("_");
+		//String projectName = elements[0];
+		//int bugId;
+		//try {
+		//	bugId = Integer.valueOf(elements[1]);
+		//} catch (NumberFormatException e) {
+		//	System.err.println("Please input correct buggy project ID, such as \"Chart_1\".");
+		//	return;
+		//}
 		
-		AbstractFixer fixer = new TBarFixer(bugDataPath, projectName, bugId, defects4jHome,pathsFromCmdLine);
+		AbstractFixer fixer = new TBarFixer(bugDataPath, bugIdStr,pathsFromCmdLine);
 		fixer.dataType = "TBar";
 		fixer.metric = Configuration.faultLocalizationMetric;
 		fixer.suspCodePosFile = new File(pathToSuspCodeCmdLine); //new File("SuspiciousCodePositions/Lang_33/Ochiai.txt");
-		
+
 		if (Integer.MAX_VALUE == fixer.minErrorTest) {
 			System.out.println("Failed to defects4j compile bug " + bugIdStr);
 			return;

@@ -52,8 +52,8 @@ public class TBarFixer extends AbstractFixer {
 	
 	private static Logger log = LoggerFactory.getLogger(TBarFixer.class);
 	
-	public TBarFixer(String path, String projectName, int bugId, String defects4jPath,ArrayList<String> pathsFromCmdLine) {
-		super(path, projectName, bugId, defects4jPath,pathsFromCmdLine);
+	public TBarFixer(String path, String bugIdStr, ArrayList<String> pathsFromCmdLine) {
+		super(path,bugIdStr, pathsFromCmdLine);
 	}
 	
 	/*public TBarFixer(String path, String metric, String projectName, int bugId, String defects4jPath) {

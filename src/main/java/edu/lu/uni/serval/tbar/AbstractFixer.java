@@ -68,11 +68,12 @@ public abstract class AbstractFixer implements IFixer {
 	
 	public boolean isTestFixPatterns = false;
 	
-	public AbstractFixer(String path, String projectName, int bugId, String defects4jPath,ArrayList<String> pathsFromCmdLine) {
+	public AbstractFixer(String path, String bugIdStr, ArrayList<String> pathsFromCmdLine) {
 		this.path = path;
-		this.buggyProject = projectName + "_" + bugId;
+		//this.buggyProject = projectName + "_" + bugId;
+		this.buggyProject = bugIdStr;
 		fullBuggyProjectPath = path + buggyProject;
-		this.defects4jPath = defects4jPath;
+		//this.defects4jPath = defects4jPath;
 //		int compileResult = TestUtils.compileProjectWithDefects4j(fullBuggyProjectPath, this.defects4jPath);
 //      if (compileResult == 1) {
 //      	log.debug(buggyProject + " ---Fixer: fix fail because of compile fail! ");
@@ -82,8 +83,8 @@ public abstract class AbstractFixer implements IFixer {
 //		if (FileHelper.getAllFiles(fullBuggyProjectPath + PathUtils.getSrcPath(buggyProject).get(0), ".class").isEmpty()) {
 			//TestUtils.compileProjectWithDefects4j(fullBuggyProjectPath, defects4jPath);
 //		}
-		TestUtils.compileProject(fullBuggyProjectPath, defects4jPath);
-		minErrorTest = TestUtils.getFailTestNumInProject(fullBuggyProjectPath, defects4jPath, failedTestStrList);
+		TestUtils.compileProject(fullBuggyProjectPath);
+		minErrorTest = TestUtils.getFailTestNumInProject(fullBuggyProjectPath,failedTestStrList);
 		/*if (minErrorTest == Integer.MAX_VALUE) {
 			TestUtils.getFailTestNumInProject(fullBuggyProjectPath, defects4jPath, failedTestStrList);
 			minErrorTest = TestUtils.getFailTestNumInProject(fullBuggyProjectPath, defects4jPath, failedTestStrList);
@@ -272,7 +273,8 @@ public abstract class AbstractFixer implements IFixer {
 				continue;
 			}
 			if (!scn.targetClassFile.exists()) { // fail to compile
-				int results = (this.buggyProject.startsWith("Mockito") || this.buggyProject.startsWith("Closure") || this.buggyProject.startsWith("Time")) ? TestUtils.compileProjectWithDefects4j(fullBuggyProjectPath, defects4jPath) : 1;
+				//int results = (this.buggyProject.startsWith("Mockito") || this.buggyProject.startsWith("Closure") || this.buggyProject.startsWith("Time")) ? TestUtils.compileProjectWithDefects4j(fullBuggyProjectPath, defects4jPath) : 1;
+				int results = 1;
 				if (results == 1) {
 					log.debug(buggyProject + " ---Fixer: fix fail because of failed compiling! ");
 					continue;
@@ -313,8 +315,7 @@ public abstract class AbstractFixer implements IFixer {
 			}
 
 			List<String> failedTestsAfterFix = new ArrayList<>();
-			int errorTestAfterFix = TestUtils.getFailTestNumInProject(fullBuggyProjectPath, this.defects4jPath,
-					failedTestsAfterFix);
+			int errorTestAfterFix = TestUtils.getFailTestNumInProject(fullBuggyProjectPath,failedTestsAfterFix);
 			failedTestsAfterFix.removeAll(this.fakeFailedTestCasesList);
 			
 			if (errorTestAfterFix < minErrorTest) {
@@ -337,6 +338,9 @@ public abstract class AbstractFixer implements IFixer {
 								"//**********************************************************\n//" + scn.suspiciousJavaFile + " ------ " + scn.buggyLine
 								+ "\n//**********************************************************\n"
 								+ "===Buggy Code===\n" + buggyCode + "\n\n===Patch Code===\n" + patchCode, false);
+					log.debug("//**********************************************************\n//" + scn.suspiciousJavaFile + " ------ " + scn.buggyLine
+					+ "\n//**********************************************************\n"
+					+ "===Buggy Code===\n" + buggyCode + "\n\n===Patch Code===\n" + patchCode);
 					} else {
 						FileHelper.outputToFile(Configuration.outputPath + this.dataType + "/FixedBugs/" + buggyProject + "/Patch_" + patchId + "_" + comparablePatches + ".txt", patchStr, false);
 					}

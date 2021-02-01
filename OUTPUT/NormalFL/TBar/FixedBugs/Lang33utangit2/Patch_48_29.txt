@@ -1,0 +1,9 @@
+//**********************************************************
+//org/apache/commons/lang3/ClassUtils.java ------ 910
+//**********************************************************
+===Buggy Code===
+classes[i] = array[i].getClass();
+
+===Patch Code===
+if (array[i] != null) {classes[i] = array[i].getClass();
+	}
