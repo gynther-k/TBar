@@ -269,18 +269,18 @@ public abstract class AbstractFixer implements IFixer {
 
 			log.debug("Compiling");
 			try {// Compile patched file.
-				/*if(Configuration.bugDataSet.equals("d4j"))
+				if(Configuration.bugDataSet.equals("d4j"))
 				{
 				ShellUtils.shellRun(Arrays.asList("javac -Xlint:unchecked -source 1.7 -target 1.7 -cp "
 						+ PathUtils.buildCompileClassPath(Arrays.asList(PathUtils.getJunitPath()), dp.classPath, dp.testClassPath)
 						+ " -d " + dp.classPath + " " + scn.targetJavaFile.getAbsolutePath()), buggyProject, 1);
-				}*/
-				//else{//from aprorg
+				}
+				else{//from aprorg
 					String result = ShellUtils.shellRun(Arrays.asList("javac -Xlint:unchecked -source 1.8 -target 1.8 -cp "
 					+ PathUtils.buildCompileClassPath(Arrays.asList(PathUtils.getJunitPath()), dp.classPath, dp.testClassPath, dp.libPaths)
 					+ " -d " + dp.classPath + " " + scn.targetJavaFile.getAbsolutePath()), buggyProject,1);
 					System.out.println(result);
-				//}
+				}
 
 			} catch (IOException e) {
 				log.debug(buggyProject + " ---Fixer: fix fail because of javac exception! ");
@@ -299,14 +299,22 @@ public abstract class AbstractFixer implements IFixer {
 			
 			log.debug("Test previously failed test cases.");
 			try {
-				/*String results = ShellUtils.shellRun(Arrays.asList("java -cp "
-						+ PathUtils.buildTestClassPath(dp.classPath, dp.testClassPath)
-						+ " org.junit.runner.JUnitCore " + this.failedTestCaseClasses), buggyProject, 2);*/
+				String results=null;
 
-						String results = ShellUtils.shellRun(Arrays.asList("java -cp "
+				if(Configuration.bugDataSet.equals("d4j"))
+				{
+
+				results = ShellUtils.shellRun(Arrays.asList("java -cp "
+						+ PathUtils.buildTestClassPath(dp.classPath, dp.testClassPath)
+						+ " org.junit.runner.JUnitCore " + this.failedTestCaseClasses), buggyProject, 2);
+				}
+				else{				
+
+						results = ShellUtils.shellRun(Arrays.asList("java -cp "
 						+ PathUtils.buildTestClassPath(dp.classPath, dp.testClassPath, dp.libPaths)
-						+ " org.junit.runner.JUnitCore " + this.failedTestCaseClasses), buggyProject,1);
+						+ " org.junit.runner.JUnitCore " + this.failedTestCaseClasses), buggyProject,2);
 				System.out.println(results);
+			}
 
 
 				if (results.isEmpty()) {

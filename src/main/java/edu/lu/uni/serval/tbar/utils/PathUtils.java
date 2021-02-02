@@ -93,7 +93,8 @@ public class PathUtils {
 		return System.getProperty("user.dir")+"/target/dependency/hamcrest-all-1.3.jar";
 	}
 
-	/*public static String buildCompileClassPath(List<String> additionalPath, String classPath, String testClassPath){
+	//D4j only
+	public static String buildCompileClassPath(List<String> additionalPath, String classPath, String testClassPath){
 		String path = "\"";
 		path += classPath;
 		path += System.getProperty("path.separator");
@@ -104,7 +105,7 @@ public class PathUtils {
 		path += StringUtils.join(additionalPath,System.getProperty("path.separator"));
 		path += "\"";
 		return path;
-	}*/
+	}
 
 	//from aprorg
 	public static String buildCompileClassPath(List<String> additionalPath, String classPath, String testClassPath, List<String> libPaths){
@@ -125,8 +126,8 @@ public class PathUtils {
 		return path.toString();
 	}
 
-	
-	/*public static String buildTestClassPath(String classPath, String testClassPath) {
+	//D4j only
+	public static String buildTestClassPath(String classPath, String testClassPath) {
 		String path = "\"";
 		path += classPath;
 		path += System.getProperty("path.separator");
@@ -140,7 +141,7 @@ public class PathUtils {
 	    path += System.getProperty("path.separator");
 		path += "\"";
 		return path;
-	}*/
+	}
 
 	//from aprorg
 	public static String buildTestClassPath(String classPath, String testClassPath, List<String> libPaths) {

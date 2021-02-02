@@ -87,9 +87,12 @@ Tests run: 1670, Failures: 12, Errors: 1, Skipped: 0
                 String[] splittedStrings = st.trim().split("\\(");
                 System.err.println(splittedStrings[0]);
                 System.err.println(splittedStrings[1]);
+                String[] splittedStringsClass = splittedStrings[1].trim().split("\\)");
+
                 
                 String testIndividual = splittedStrings[0];
-                String testClass = splittedStrings[1].replaceAll("[()]", "");
+                //String testClass = splittedStrings[1].replaceAll("[()]", "");
+                String testClass = splittedStringsClass[0].trim();
 
                 //System.err.println(testClass);
                 //System.err.println(testIndividual);

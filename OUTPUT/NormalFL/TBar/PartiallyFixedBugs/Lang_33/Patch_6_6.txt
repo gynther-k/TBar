@@ -1,0 +1,13 @@
+diff --git a/src/main/java/org/apache/commons/lang3/ClassUtils.java b/src/main/java/org/apache/commons/lang3/ClassUtils.java
+index 615e4a9a..456fbe41 100644
+--- a/src/main/java/org/apache/commons/lang3/ClassUtils.java
++++ b/src/main/java/org/apache/commons/lang3/ClassUtils.java
+@@ -902,7 +902,7 @@ public class ClassUtils {
+     public static Class<?>[] toClass(Object[] array) {
+         if (array == null) {
+             return null;
+-        } else if (array.length == 0) {
++        } else if (array.length<0) {
+             return ArrayUtils.EMPTY_CLASS_ARRAY;
+         }
+         Class<?>[] classes = new Class[array.length];
