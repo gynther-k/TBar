@@ -45,10 +45,16 @@ public class Main {
 
 		String pathToSuspCodeCmdLine = args[6];
 		String projecWithoutGit = args[7];
+		String bearsord4j = args[8];
 
 		if(projecWithoutGit.equals("nogit"))
 		{
 			Configuration.NO_GIT=true;
+		}
+
+		if(bearsord4j.equals("d4j"))
+		{
+			Configuration.bugDataSet="d4j";
 		}
 
 
