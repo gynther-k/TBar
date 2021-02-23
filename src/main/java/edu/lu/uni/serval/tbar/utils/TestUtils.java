@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.io.FileReader;
 import edu.lu.uni.serval.tbar.config.Configuration;
+import java.io.*;  
 
 
 
@@ -56,18 +57,293 @@ Tests run: 1670, Failures: 12, Errors: 1, Skipped: 0
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD FAILURE
 
+#######################################################################################################################################
+
+Bears2:
+
+READ ERRORS
+1. if row.contains Tests run: && Failures: && Errors: && !Errors: 0   
+2. startREAD error
+3. if ERROR! && !str.contains(in)    Collect
+
+READ FAILURES
+1. if row.contains Tests run: && Failures: && Errors: && Errors: 0  && !Failures: 0 
+2. startREAD faiure
+3. if contains FAILURE! && !contains in Collect
+
+Tests run: 31, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.025 sec <<< FAILURE! - in com.fasterxml.jackson.databind.deser.TestMapDeserialization
+testcharSequenceKeyMap(com.fasterxml.jackson.databind.deser.TestMapDeserialization)  Time elapsed: 0.005 sec  <<< ERROR!
+com.fasterxml.jackson.databind.JsonMappingException: Can not find a (Map) Key deserializer for type [simple type, class java.lang.CharSequence]
+ at [Source: {"a":"b"}; line: 1, column: 1]
+	at com.fasterxml.jackson.databind.JsonMappingException.from(JsonMappingException.java:284)
+	at com.fasterxml.jackson.databind.deser.DeserializerCache._handleUnknownKeyDeserializer(DeserializerCache.java:587)
+	at com.fasterxml.jackson.databind.deser.DeserializerCache.findKeyDeserializer(DeserializerCache.java:168)
+	at com.fasterxml.jackson.databind.DeserializationContext.findKeyDeserializer(DeserializationContext.java:500)
+	at com.fasterxml.jackson.databind.deser.std.MapDeserializer.createContextual(MapDeserializer.java:231)
+	at com.fasterxml.jackson.databind.DeserializationContext.handleSecondaryContextualization(DeserializationContext.java:685)
+	at com.fasterxml.jackson.databind.DeserializationContext.findRootValueDeserializer(DeserializationContext.java:482)
+	at com.fasterxml.jackson.databind.ObjectMapper._findRootDeserializer(ObjectMapper.java:3908)
+	at com.fasterxml.jackson.databind.ObjectMapper._readMapAndClose(ObjectMapper.java:3803)
+	at com.fasterxml.jackson.databind.ObjectMapper.readValue(ObjectMapper.java:2816)
+	at com.fasterxml.jackson.databind.deser.TestMapDeserialization.testcharSequenceKeyMap(TestMapDeserialization.java:507)
+
+
+(Läser inte här eftersom jag inte får hela org.com osv osv.)
+Results :
+
+Tests in error: 
+  TestMapDeserialization.testcharSequenceKeyMap:507 » JsonMapping Can not find a...
+
+  TRUE SKA VA:
+
+  com.fasterxml.jackson.databind.deser.TestMapDeserialization.testcharSequenceKeyMap
+  com.fasterxml.jackson.databind.JsonMappingException: Can not find a (Map) Key deserializer for type [simple type, class java.lang.CharSequence] at [Source: {"a":"b"}; line: 1, column: 1]
+
+
+
 */
 
+public static int getFailTestNumInProjectBears2(String projectName, List<String> failedTests){
+    //String testResult = getDefects4jResult(projectName, defects4jPath, "test");
+    
+    String testResult = getProjectResultTest(projectName,"test");
+
+
+
+    try {
+    //File fileTestOutput = new File("/home/gynther/Desktop/thesisJan28LocalStartChange/TBar/D4J/projects/Lang_33/testOutput.txt"); 
+    File fileTestOutput = new File(Configuration.GLOBAL_TEMP_FILES_PATH+"testOutPut.txt"); 
+
+    //BufferedReader br = new BufferedReader(new FileReader(fileTestOutput)); //innan med bears
+
+    Reader inputString = new StringReader(testResult);
+    BufferedReader br = new BufferedReader(inputString);
+
+
+    String st; 
+    List<String> failedTestCmdLine = new ArrayList<>();
+    List<String> errorTestCmdLine = new ArrayList<>();
+    boolean readFailedtests = false;
+    boolean readErrortests = false;
+    boolean readBoth = false;
+    boolean buildSuccess = false;
+    int lineCount = 0;
+
+    while ((st = br.readLine()) != null)
+    {
+        lineCount++;
+        if(Configuration.testVerbose)
+        {
+        System.err.println(st); 
+        }
+        
+
+        //Failed tests
+        if(readFailedtests && !st.trim().isEmpty() && !st.contains("- in") && st.contains("FAILURE!")) //2. Read the lines
+        {
+            String[] splittedStrings = st.trim().split("\\(");
+            System.err.println(splittedStrings[0]);
+            System.err.println(splittedStrings[1]);
+            String[] splittedStringsClass = splittedStrings[1].trim().split("\\)");
+
+            
+            String testIndividual = splittedStrings[0];
+            //String testClass = splittedStrings[1].replaceAll("[()]", "");
+            String testClass = splittedStringsClass[0].trim();
+
+            if(Configuration.testVerbose)
+            {
+            System.err.println(testClass);
+            System.err.println(testIndividual);
+            }
+    
+
+            failedTestCmdLine.add(testClass+"::"+testIndividual);
+        }
+        if(st.contains("Tests run:") && st.contains("Failures:") && st.contains("Errors:") && st.contains("Errors: 0") && !st.contains("Failures: 0")) //1. Read failures 
+        {
+            readFailedtests=true;
+            //failedTestCmdLine.clear();
+        }
+        if(readFailedtests && st.trim().isEmpty()){ //3. Stop reading
+            readFailedtests=false;
+        }
+
+        /* ***************************************************************************************************************/
+
+        //Tests in error:
+        if(readErrortests && !st.trim().isEmpty() && !st.contains("- in") && st.contains("ERROR!")) //2. Read the lines
+        {
+            String[] splittedStringsE = st.trim().split("\\(");
+            System.err.println(splittedStringsE[0]);
+            System.err.println(splittedStringsE[1]);
+            String[] splittedStringsClassE = splittedStringsE[1].trim().split("\\)");
+
+            String testIndividualE = splittedStringsE[0];
+            //String testClassE = splittedStringsE[1].replaceAll("[()]", "");
+            String testClassE = splittedStringsClassE[0].trim();
+
+            if(Configuration.testVerbose)
+            {
+                System.err.println(testIndividualE);
+                System.err.println(testClassE);
+            }
+
+
+            errorTestCmdLine.add(testClassE+"::"+testIndividualE);
+        }
+
+        if(st.contains("Tests run:") && st.contains("Failures:") && st.contains("Errors:") && !st.contains("Errors: 0")) // START READING ERRORS
+        {
+            readErrortests=true;
+            //errorTestCmdLine.clear();
+        }
+        if(readErrortests && st.trim().isEmpty()){ //3. Stop reading
+            readErrortests=false;
+        }
+
+        /* ***************************************************************************************************************/
+
+        //Test with both Failure and Error:
+        if(readBoth && !st.trim().isEmpty() && !st.contains("- in") && st.contains("ERROR!")) //2. Read the lines Error
+        {
+            String[] splittedStringsE = st.trim().split("\\(");
+            //System.err.println(splittedStringsE[0]);
+            //System.err.println(splittedStringsE[1]);
+            String[] splittedStringsClassE = splittedStringsE[1].trim().split("\\)");
+
+            
+            String testIndividualE = splittedStringsE[0];
+            //String testClassE = splittedStringsE[1].replaceAll("[()]", "");
+            String testClassE = splittedStringsClassE[0].trim();
+
+            if(Configuration.testVerbose)
+            {
+                System.err.println(testIndividualE);
+                System.err.println(testClassE);
+            }
+
+            errorTestCmdLine.add(testClassE+"::"+testIndividualE);
+        }
+
+                //Failed tests
+        if(readBoth && !st.trim().isEmpty() && !st.contains("- in") && st.contains("FAILURE!")) //2. Read the lines Failure
+        {
+            String[] splittedStrings = st.trim().split("\\(");
+            //System.err.println(splittedStrings[0]);
+            //System.err.println(splittedStrings[1]);
+            String[] splittedStringsClass = splittedStrings[1].trim().split("\\)");
+
+            
+            String testIndividual = splittedStrings[0];
+            //String testClass = splittedStrings[1].replaceAll("[()]", "");
+            String testClass = splittedStringsClass[0].trim();
+
+
+            if(Configuration.testVerbose)
+            {
+            System.err.println(testClass);
+            System.err.println(testIndividual);
+            }
+
+
+            failedTestCmdLine.add(testClass+"::"+testIndividual);
+        }
+
+        if(st.contains("Tests run:") && st.contains("Failures:") && st.contains("Errors:") && !st.contains("Errors: 0") && !st.contains("Failures: 0")) // START READING ERRORS
+        {
+            readBoth=true;
+            //errorTestCmdLine.clear();
+        }
+        /*if(readBoth && st.trim().isEmpty()){ //3. Stop reading Results || Running
+            readBoth=false;
+        }*/
+        if(readBoth && (st.contains("Results") || st.contains("Running"))){ //3. Stop reading Results || Running
+            readBoth=false;
+        }
+
+
+        if(st.contains("BUILD SUCCESS"))
+        {
+            buildSuccess=true;
+            System.out.println("BUILD SUCESSXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+        }
+        if(st.contains("BUILD FAILURE"))
+        {
+            System.out.println("BUILD faiilllureeeeeeeXXXXXXXXXXXXXXXXXXXXXXXXXX");
+        }
+    }
+
+    System.err.println("sizeoferrortest"+errorTestCmdLine.size());
+    System.err.println("sizeoffailtest"+failedTestCmdLine.size());
+    fileTestOutput.delete();
+
+    int errorNum=0;
+
+    if (lineCount<2){//error occurs in run
+        return Integer.MAX_VALUE;
+    }
+    if(buildSuccess)
+    {
+        return 0;
+    }
+    /*if (!testResult.contains("Failing tests:")){
+        return Integer.MAX_VALUE;
+    }*/
+    /*int errorNum = 0;
+    String[] lines = testResult.trim().split("\n");
+    for (String lineString: lines){
+        if (lineString.startsWith("Failing tests:")){
+            errorNum =  Integer.valueOf(lineString.split(":")[1].trim());
+            if (errorNum == 0) break;
+        } else if (lineString.startsWith("Running ")) {
+            break;
+        } else {
+            failedTests.add(lineString.trim());
+        }
+    }*/
+
+    if(errorTestCmdLine.size()>0) //Error has priority
+    {
+        failedTests.addAll(errorTestCmdLine);
+        errorNum=errorTestCmdLine.size();
+    }
+    else{
+        failedTests.addAll(failedTestCmdLine);
+        errorNum=failedTestCmdLine.size();
+    }
+
+    return errorNum;
+
+
+    }
+    catch(IOException e){
+        System.err.println("FAILFILECREATION");
+        return Integer.MAX_VALUE;
+    }
+
+    //return Integer.MAX_VALUE;
+
+}
+
+    //IMORRN - getFailTestNumInProject() två versioner, en NORMAL Denna nedan....... || or en som läser at som Saab skriv av. sen en extra Config.testRead, Normal,Not or
 	public static int getFailTestNumInProject(String projectName, List<String> failedTests){
         //String testResult = getDefects4jResult(projectName, defects4jPath, "test");
         
         String testResult = getProjectResultTest(projectName,"test");
 
+
+
         try {
         //File fileTestOutput = new File("/home/gynther/Desktop/thesisJan28LocalStartChange/TBar/D4J/projects/Lang_33/testOutput.txt"); 
         File fileTestOutput = new File(Configuration.GLOBAL_TEMP_FILES_PATH+"testOutPut.txt"); 
 
-        BufferedReader br = new BufferedReader(new FileReader(fileTestOutput)); 
+        //BufferedReader br = new BufferedReader(new FileReader(fileTestOutput)); //innan med bears
+
+        Reader inputString = new StringReader(testResult);
+        BufferedReader br = new BufferedReader(inputString);
+
+
         String st; 
         List<String> failedTestCmdLine = new ArrayList<>();
         List<String> errorTestCmdLine = new ArrayList<>();
@@ -315,7 +591,7 @@ Tests run: 1670, Failures: 12, Errors: 1, Skipped: 0
             if(Configuration.bugDataSet.equals("bears"))
             {
             
-            result = ShellUtils.shellRun(Arrays.asList("cd " + projectName + "\n", "mvn -V -B -Denforcer.skip=true -Dcheckstyle.skip=true -Dcobertura.skip=true -DskipITs=true -Drat.skip=true -Dlicense.skip=true -Dfindbugs.skip=true -Dgpg.skip=true -Dskip.npm=true -Dskip.gulp=true -Dskip.bower=true test | tee "+Configuration.GLOBAL_TEMP_FILES_PATH+"testOutPut.txt"+" -a"), buggyProject, cmdType.equals("test") ? 2 : 1);//"defects4j " + cmdType + "\n"));//
+            result = ShellUtils.shellRun(Arrays.asList("cd " + projectName + "\n", "mvn -V -B -Denforcer.skip=true -Dcheckstyle.skip=true -Dcobertura.skip=true -DskipITs=true -Drat.skip=true -Dlicense.skip=true -Dfindbugs.skip=true -Dgpg.skip=true -Dskip.npm=true -Dskip.gulp=true -Dskip.bower=true test | tee "+Configuration.GLOBAL_TEMP_FILES_PATH+"testOutPut.txt"), buggyProject, cmdType.equals("test") ? 2 : 1);//"defects4j " + cmdType + "\n"));//
 
             }
 

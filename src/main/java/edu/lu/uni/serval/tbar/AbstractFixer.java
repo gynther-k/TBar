@@ -84,7 +84,21 @@ public abstract class AbstractFixer implements IFixer {
 			//TestUtils.compileProjectWithDefects4j(fullBuggyProjectPath, defects4jPath);
 //		}
 		TestUtils.compileProject(fullBuggyProjectPath);
-		minErrorTest = TestUtils.getFailTestNumInProject(fullBuggyProjectPath,failedTestStrList);
+
+		//minErrorTest = TestUtils.getFailTestNumInProject(fullBuggyProjectPath,failedTestStrList);
+
+		if(Configuration.testOutputAdapter_for.equals("bears2"))
+		{
+			minErrorTest = TestUtils.getFailTestNumInProjectBears2(fullBuggyProjectPath,failedTestStrList);
+		}
+		else{
+			minErrorTest = TestUtils.getFailTestNumInProject(fullBuggyProjectPath,failedTestStrList);
+		}
+
+
+
+
+
 		/*if (minErrorTest == Integer.MAX_VALUE) {
 			TestUtils.getFailTestNumInProject(fullBuggyProjectPath, defects4jPath, failedTestStrList);
 			minErrorTest = TestUtils.getFailTestNumInProject(fullBuggyProjectPath, defects4jPath, failedTestStrList);
@@ -207,7 +221,11 @@ public abstract class AbstractFixer implements IFixer {
 		String filePath = dp.srcPath + suspiciousJavaFile;
 		System.err.println("filePath: "+filePath);
 
-		if (!new File(filePath).exists()) return null;
+		if (!new File(filePath).exists())
+		{ 
+			System.err.println("FILEPATH DO NOT EXIST");
+			return null;
+		}
 		File suspCodeFile = new File(filePath);
 		System.err.println("suspCodeFile: "+suspCodeFile);
 
@@ -254,7 +272,17 @@ public abstract class AbstractFixer implements IFixer {
 	
 	protected void testGeneratedPatches(List<Patch> patchCandidates, SuspCodeNode scn) {
 		// Testing generated patches.
+		int counter=0;
 		for (Patch patch : patchCandidates) {
+
+			System.err.println("***************************** TEST PACH NO"+counter+" OF: "+patchCandidates.size());
+			counter++;
+
+			/*if(counter<50)
+			{
+				continue;
+			}*/
+
 			patch.buggyFileName = scn.suspiciousJavaFile;
 			addPatchCodeToFile(scn, patch);// Insert the patch.
 			if (this.triedPatchCandidates.contains(patch)) continue;
@@ -343,7 +371,20 @@ public abstract class AbstractFixer implements IFixer {
 			}
 
 			List<String> failedTestsAfterFix = new ArrayList<>();
-			int errorTestAfterFix = TestUtils.getFailTestNumInProject(fullBuggyProjectPath,failedTestsAfterFix);
+			
+			//int errorTestAfterFix = TestUtils.getFailTestNumInProjectBears2(fullBuggyProjectPath,failedTestsAfterFix);
+
+			int errorTestAfterFix = 0;
+
+			if(Configuration.testOutputAdapter_for.equals("bears2"))
+			{
+				errorTestAfterFix = TestUtils.getFailTestNumInProjectBears2(fullBuggyProjectPath,failedTestStrList);
+			}
+			else{
+				errorTestAfterFix = TestUtils.getFailTestNumInProject(fullBuggyProjectPath,failedTestStrList);
+			}
+	
+
 			failedTestsAfterFix.removeAll(this.fakeFailedTestCasesList);
 			
 			if (errorTestAfterFix < minErrorTest) {

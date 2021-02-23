@@ -5,6 +5,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import edu.lu.uni.serval.tbar.config.Configuration;
 
 import edu.lu.uni.serval.tbar.utils.FileHelper;
 import edu.lu.uni.serval.tbar.utils.JavaLibrary;
@@ -91,6 +92,20 @@ public class DataPreparer {
 			libPackages.addAll(FileHelper.getAllFiles(projectDir + buggyProject + "/target/lib/", ".jar"));
 			//System.err.println("libPackages Exist");
 		}
+
+		//Get Additional dependencies
+		for (int i=0; i < Configuration.additionalDepsFromCmdLine.size(); i++)
+		{
+
+			if (new File(Configuration.additionalDepsFromCmdLine.get(i)).exists()) {
+				libPackages.addAll(FileHelper.getAllFiles(Configuration.additionalDepsFromCmdLine.get(i), ".jar"));
+				//System.err.println("libPackages Exist");
+			}
+	
+		}
+
+
+
 
 		for (File libPackage : libPackages) {
 			//System.err.println("libpackages add"+libPackage);

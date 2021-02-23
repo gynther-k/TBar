@@ -29,9 +29,13 @@ public class ShellUtils {
         }
         else {
             fileName = Configuration.TEMP_FILES_PATH + buggyProject + ".sh";
-            cmd = "bash " + fileName;
+            cmd = "bash "+fileName;
         }
         File batFile = new File(fileName);
+        batFile.setReadable(true, false);
+        batFile.setExecutable(true, false);
+        batFile.setWritable(true, false);
+
         if (!batFile.exists()){
         	if (!batFile.getParentFile().exists()) {
         		batFile.getParentFile().mkdirs();
@@ -42,7 +46,10 @@ public class ShellUtils {
             }
         }
         FileOutputStream outputStream = null;
+        System.err.println("shellRun1");
+
         try {
+        System.err.println("shellRun2");
             outputStream = new FileOutputStream(batFile);
             for (String arg: asList){
                 System.out.println("arg"+arg);
@@ -53,42 +60,118 @@ public class ShellUtils {
                 outputStream.close();
             }
         }
-        batFile.deleteOnExit();
         System.err.println("theCMD"+cmd);
-        Process process= Runtime.getRuntime().exec(cmd);
-        String results = ShellUtils.getShellOut(process, type);
+        batFile.deleteOnExit();
+
+        //Process process= Runtime.getRuntime().exec(cmd);
+        String results = ShellUtils.getShellOut(cmd, type);
+
         batFile.delete();
         return results;
+    }
+    
+    private static String getShellOut(String cmd, int type) {
+
+        String returnString="";
+
+        try {
+
+            // -- Linux --
+            
+            // Run a shell command
+            // Process process = Runtime.getRuntime().exec("ls /home/mkyong/");
+    
+            // Run a shell script
+            // Process process = Runtime.getRuntime().exec("path/to/hello.sh");
+    
+            // -- Windows --
+            
+            // Run a command
+            //Process process = Runtime.getRuntime().exec("cmd /c dir C:\\Users\\mkyong");
+    
+            //Run a bat file
+            Process process = Runtime.getRuntime().exec(cmd);
+    
+            StringBuilder output = new StringBuilder();
+    
+            BufferedReader reader = new BufferedReader(
+                    new InputStreamReader(process.getInputStream()));
+    
+            String line;
+            while ((line = reader.readLine()) != null) {
+                output.append(line + "\n");
+            }
+    
+            int exitVal = process.waitFor();
+            if (exitVal == 0) {
+                System.out.println("ShellUtils.java - getShellOut() - Success excecuting shell process!");
+                if(Configuration.ShellVerbose)
+                {
+                System.out.println(output);
+                }
+                returnString=output.toString();
+                //System.exit(0);
+            } else {
+                //abnormal...
+            }
+    
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    
+        
+    
+        //System.exit(0);
+
+        return returnString;
 	}
 
-	private static String getShellOut(Process process, int type) {
+
+	private static String getShellOutOld(Process process, int type) {
 		ExecutorService service = Executors.newSingleThreadExecutor();
         Future<String> future = service.submit(new ReadShellProcess(process));
         String returnString = "";
+        System.err.println("getShellOut1");
         try {
+
+            System.err.println("getShellOut2");
+
+
             if (type == 2)
-            	returnString = future.get(Configuration.TEST_SHELL_RUN_TIMEOUT, TimeUnit.SECONDS);
+            {
+                returnString = future.get(Configuration.TEST_SHELL_RUN_TIMEOUT, TimeUnit.SECONDS);
+            }
             else 
-            	returnString = future.get(Configuration.SHELL_RUN_TIMEOUT, TimeUnit.SECONDS);
+            {
+                returnString = future.get(Configuration.SHELL_RUN_TIMEOUT, TimeUnit.SECONDS);
+            }
+                
+                System.err.println("getShellOut3");
+
         } catch (InterruptedException e){
             future.cancel(true);
-//            e.printStackTrace();
+            e.printStackTrace();
             shutdownProcess(service, process);
             return "";
         } catch (TimeoutException e){
             future.cancel(true);
-//            e.printStackTrace();
+            e.printStackTrace();
             shutdownProcess(service, process);
             return "";
         } catch (ExecutionException e){
             future.cancel(true);
-//            e.printStackTrace();
+            e.printStackTrace();
             shutdownProcess(service, process);
             return "";
-        } finally {
+        }
+        finally {
+            System.err.println("getShellOutFinally");
+
             shutdownProcess(service, process);
         }
-        //System.out.println("I SHELL OUT:"+returnString);
+        System.out.println("I SHELL OUT:"+returnString);
         return returnString;
 	}
 

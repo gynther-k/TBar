@@ -15,12 +15,16 @@ import java.util.ArrayList;
  */
 
  /* Bears-98
-mvn install && rm target/dependency/TBar-0.0.1-SNAPSHOT.jar && cp target/TBar-0.0.1-SNAPSHOT.jar target/dependency/ && ./NormalFLTBarRunner.sh D4J/projects/ Bears-98 /target/classes/ /target/test-classes/ /src/ /test/ SuspiciousCodePositions/Lang_33/B98Ochaii.txt withgit
- */
+mvn install && rm target/dependency/TBar-0.0.1-SNAPSHOT.jar && cp target/TBar-0.0.1-SNAPSHOT.jar target/dependency/ && ./NormalFLTBarRunner.sh D4J/projects/ Bears-98 /target/classes/ /target/test-classes/ /src/ /test/ SuspiciousCodePositions//B98Ochaii.txt withgit
+ 
+Bears-2
+/home/gynther/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.7.8/
+
+*/																																																															
 
   /* Lang_33 d4j
 mvn install && rm target/dependency/TBar-0.0.1-SNAPSHOT.jar && cp target/TBar-0.0.1-SNAPSHOT.jar target/dependency/ && ./NormalFLTBarRunner.sh D4J/projects/ Lang_33 /target/classes/ /target/test-classes/ /src/main/java/ /src/test/java/ SuspiciousCodePositions/Lang_33/Ochiai.txt withgit
- */
+ */																																																				//org			//org											
 
 public class Main {
 	
@@ -56,6 +60,23 @@ public class Main {
 		{
 			Configuration.bugDataSet="d4j";
 		}
+
+		//Additional Dependencies per project
+		//String incomingDeps = "/home/gynther/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.7.8/";
+		String incomingDeps = args[9];
+
+
+		String[] arrSplit = incomingDeps.split(", ");
+		for (int i=0; i < arrSplit.length; i++)
+		{
+			Configuration.additionalDepsFromCmdLine.add(arrSplit[i]);
+		}
+
+		//print shell output
+		Configuration.ShellVerbose=false;
+		Configuration.testVerbose=false;
+		Configuration.testOutputAdapter_for="bears2";
+	
 
 
 		System.out.println(bugId);
