@@ -372,11 +372,25 @@ public abstract class AbstractFixer implements IFixer {
 				}
 				else{				
 
-						results = ShellUtils.shellRun(Arrays.asList("java -cp "
+				/*		results = ShellUtils.shellRun(Arrays.asList("java -cp "
 						+ PathUtils.buildTestClassPath(dp.classPath, dp.testClassPath, dp.libPaths)
 						+ " org.junit.runner.JUnitCore " + this.failedTestCaseClasses), buggyProject,2);
 				System.err.println("Results from tests:");
+				System.out.println(results);*/
+
+				//Fix for spoon, need to excecute tests in source folder (should be optional)
+				String filteredClassPath = dp.classPath.replace(fullBuggyProjectPath+"/", "");
+				String filteredtestClassPath = dp.testClassPath.replace(fullBuggyProjectPath+"/", "");
+
+				results = ShellUtils.shellRun(Arrays.asList("cd " + fullBuggyProjectPath + "\n","java -cp "
+						+ PathUtils.buildTestClassPath(filteredClassPath, filteredtestClassPath, dp.libPaths)
+						+ " org.junit.runner.JUnitCore " + this.failedTestCaseClasses), buggyProject,2);
+				System.err.println("Results from tests:");
 				System.out.println(results);
+
+				//fullBuggyProjectPath
+				//result = ShellUtils.shellRun(Arrays.asList("cd " + projectName + "\n", "mvn -Dmaven.test.skip clean install"), buggyProject, cmdType.equals("test") ? 2 : 1);//"defects4j " + cmdType + "\n"));//
+
 				//System.exit(0);
 			}
 

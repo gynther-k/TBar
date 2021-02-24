@@ -40,7 +40,7 @@ HÄR BÖRJAT TA OMRÅDET RUNTOM: @ @ och metoden
 
 x mvn install && rm target/dependency/TBar-0.0.1-SNAPSHOT.jar && cp target/TBar-0.0.1-SNAPSHOT.jar target/dependency/ && ./NormalFLTBarRunner.sh D4J/projects/ Bears-32 /target/classes/ /target/test-classes/ /src/main/java/ /src/test/java/ SuspiciousCodePositions/BearsPFL/B32.txt withgit bears /home/gynther/.m2/repository/org/eclipse/,D4J/projects/Bears-27/target/,/home/gynther/.m2/repository/javax/ bears2
 
-mvn install && rm target/dependency/TBar-0.0.1-SNAPSHOT.jar && cp target/TBar-0.0.1-SNAPSHOT.jar target/dependency/ && ./NormalFLTBarRunner.sh D4J/projects/ Bears-36 /target/classes/ /target/test-classes/ /src/main/java/ /src/test/java/ SuspiciousCodePositions/BearsPFL/B36.txt withgit bears /home/gynther/.m2/repository/org/eclipse/,D4J/projects/Bears-36/target/,/home/gynther/.m2/repository/javax/ bears2
+Denna is fixed med cd test24/2 - mvn install && rm target/dependency/TBar-0.0.1-SNAPSHOT.jar && cp target/TBar-0.0.1-SNAPSHOT.jar target/dependency/ && ./NormalFLTBarRunner.sh D4J/projects/ Bears-36 /target/classes/ /target/test-classes/ /src/main/java/ /src/test/java/ SuspiciousCodePositions/BearsPFL/B36.txt withgit bears /home/gynther/.m2/repository/org/eclipse/,D4J/projects/Bears-36/target/,/home/gynther/.m2/repository/javax/ bears2
 
 
 mvn install && rm target/dependency/TBar-0.0.1-SNAPSHOT.jar && cp target/TBar-0.0.1-SNAPSHOT.jar target/dependency/ && ./NormalFLTBarRunner.sh D4J/projects/ Bears-38 /target/classes/ /target/test-classes/ /src/main/java/ /src/test/java/ SuspiciousCodePositions/BearsPFL/B38.txt withgit bears /home/gynther/.m2/repository/org/eclipse/,D4J/projects/Bears-38/target/,/home/gynther/.m2/repository/javax/ bears2
