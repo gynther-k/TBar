@@ -10,5 +10,6 @@ suspiciousCodeLoc=$7
 projectWithoutGit=$8
 bearsord4j=$9
 incomingDeps=${10}
+readTests=${11}
 
-java -Xmx1g -cp "target/dependency/*" edu.lu.uni.serval.tbar.main.Main $bugDataPath $bugID $targetClasses $targetTestClasses $targetMainJava $targetTestJava $suspiciousCodeLoc $projectWithoutGit $bearsord4j $incomingDeps
+java -Xmx1g -cp "target/dependency/*" edu.lu.uni.serval.tbar.main.Main $bugDataPath $bugID $targetClasses $targetTestClasses $targetMainJava $targetTestJava $suspiciousCodeLoc $projectWithoutGit $bearsord4j $incomingDeps $readTests

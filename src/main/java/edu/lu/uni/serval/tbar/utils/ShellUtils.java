@@ -100,15 +100,16 @@ public class ShellUtils {
             String line;
             while ((line = reader.readLine()) != null) {
                 output.append(line + "\n");
+                if(Configuration.ShellVerbose)
+                {
+                System.out.println(line);
+                }
+
             }
     
             int exitVal = process.waitFor();
             if (exitVal == 0) {
                 System.out.println("ShellUtils.java - getShellOut() - Success excecuting shell process!");
-                if(Configuration.ShellVerbose)
-                {
-                System.out.println(output);
-                }
                 returnString=output.toString();
                 //System.exit(0);
             } else {

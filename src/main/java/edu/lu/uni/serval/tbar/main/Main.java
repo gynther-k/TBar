@@ -15,10 +15,44 @@ import java.util.ArrayList;
  */
 
  /* Bears-98
-mvn install && rm target/dependency/TBar-0.0.1-SNAPSHOT.jar && cp target/TBar-0.0.1-SNAPSHOT.jar target/dependency/ && ./NormalFLTBarRunner.sh D4J/projects/ Bears-98 /target/classes/ /target/test-classes/ /src/ /test/ SuspiciousCodePositions//B98Ochaii.txt withgit
+xmvn install && rm target/dependency/TBar-0.0.1-SNAPSHOT.jar && cp target/TBar-0.0.1-SNAPSHOT.jar target/dependency/ && ./NormalFLTBarRunner.sh D4J/projects/ Bears-98 /target/classes/ /target/test-classes/ /src/ /test/ SuspiciousCodePositions/BearsPFL/B98.txt withgit bears none normal
  
 Bears-2
-/home/gynther/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.7.8/
+xmvn install && rm target/dependency/TBar-0.0.1-SNAPSHOT.jar && cp target/TBar-0.0.1-SNAPSHOT.jar target/dependency/ && ./NormalFLTBarRunner.sh D4J/projects/ Bears-2 /target/classes/ /target/test-classes/ /src/main/java/ /src/test/java/ SuspiciousCodePositions/BearsPFL/B2.txt withgit bears /home/gynther/.m2/repository/com/fasterxml/ bears2
+
+
+xmvn install && rm target/dependency/TBar-0.0.1-SNAPSHOT.jar && cp target/TBar-0.0.1-SNAPSHOT.jar target/dependency/ && ./NormalFLTBarRunner.sh D4J/projects/ Bears-3 /target/classes/ /target/test-classes/ /src/main/java/ /src/test/java/ SuspiciousCodePositions/BearsPFL/B3.txt withgit bears /home/gynther/.m2/repository/com/fasterxml/ bears2
+
+
+XcORRECT mvn install && rm target/dependency/TBar-0.0.1-SNAPSHOT.jar && cp target/TBar-0.0.1-SNAPSHOT.jar target/dependency/ && ./NormalFLTBarRunner.sh D4J/projects/ Bears-5 /target/classes/ /target/test-classes/ /src/main/java/ /src/test/java/ SuspiciousCodePositions/BearsPFL/B5.txt withgit bears /home/gynther/.m2/repository/com/fasterxml/ bears2
+
+X mvn install && rm target/dependency/TBar-0.0.1-SNAPSHOT.jar && cp target/TBar-0.0.1-SNAPSHOT.jar target/dependency/ && ./NormalFLTBarRunner.sh D4J/projects/ Bears-8 /target/classes/ /target/test-classes/ /src/main/java/ /src/test/java/ SuspiciousCodePositions/BearsPFL/B8.txt withgit bears /home/gynther/.m2/repository/com/fasterxml/ bears2
+
+ FEL DEPENDENCIE FUNKAR EJ-mvn install && rm target/dependency/TBar-0.0.1-SNAPSHOT.jar && cp target/TBar-0.0.1-SNAPSHOT.jar target/dependency/ && ./NormalFLTBarRunner.sh D4J/projects/ Bears-12 /target/classes/ /target/test-classes/ /src/main/java/ /src/test/java/ SuspiciousCodePositions/BearsPFL/B12.txt withgit bears /home/gynther/.m2/repository/com/fasterxml/ bears2
+
+x mvn install && rm target/dependency/TBar-0.0.1-SNAPSHOT.jar && cp target/TBar-0.0.1-SNAPSHOT.jar target/dependency/ && ./NormalFLTBarRunner.sh D4J/projects/ Bears-19 /target/classes/ /target/test-classes/ /src/main/java/ /src/test/java/ SuspiciousCodePositions/BearsPFL/B19.txt withgit bears /home/gynther/.m2/repository/com/fasterxml/ bears2
+
+---
+
+x Hittar ej fil mvn install && rm target/dependency/TBar-0.0.1-SNAPSHOT.jar && cp target/TBar-0.0.1-SNAPSHOT.jar target/dependency/ && ./NormalFLTBarRunner.sh D4J/projects/ Bears-27 /target/classes/ /target/test-classes/ /src/main/java/ /src/test/java/ SuspiciousCodePositions/BearsPFL/B27.txt withgit bears /home/gynther/.m2/repository/org/eclipse/,D4J/projects/Bears-27/target/,/home/gynther/.m2/repository/javax/ bears2
+
+HÄR BÖRJAT TA OMRÅDET RUNTOM: @ @ och metoden
+
+x mvn install && rm target/dependency/TBar-0.0.1-SNAPSHOT.jar && cp target/TBar-0.0.1-SNAPSHOT.jar target/dependency/ && ./NormalFLTBarRunner.sh D4J/projects/ Bears-32 /target/classes/ /target/test-classes/ /src/main/java/ /src/test/java/ SuspiciousCodePositions/BearsPFL/B32.txt withgit bears /home/gynther/.m2/repository/org/eclipse/,D4J/projects/Bears-27/target/,/home/gynther/.m2/repository/javax/ bears2
+
+mvn install && rm target/dependency/TBar-0.0.1-SNAPSHOT.jar && cp target/TBar-0.0.1-SNAPSHOT.jar target/dependency/ && ./NormalFLTBarRunner.sh D4J/projects/ Bears-36 /target/classes/ /target/test-classes/ /src/main/java/ /src/test/java/ SuspiciousCodePositions/BearsPFL/B36.txt withgit bears /home/gynther/.m2/repository/org/eclipse/,D4J/projects/Bears-36/target/,/home/gynther/.m2/repository/javax/ bears2
+
+
+mvn install && rm target/dependency/TBar-0.0.1-SNAPSHOT.jar && cp target/TBar-0.0.1-SNAPSHOT.jar target/dependency/ && ./NormalFLTBarRunner.sh D4J/projects/ Bears-38 /target/classes/ /target/test-classes/ /src/main/java/ /src/test/java/ SuspiciousCodePositions/BearsPFL/B38.txt withgit bears /home/gynther/.m2/repository/org/eclipse/,D4J/projects/Bears-38/target/,/home/gynther/.m2/repository/javax/ bears2
+
+mvn install && rm target/dependency/TBar-0.0.1-SNAPSHOT.jar && cp target/TBar-0.0.1-SNAPSHOT.jar target/dependency/ && ./NormalFLTBarRunner.sh D4J/projects/ Bears-42 /target/classes/ /target/test-classes/ /src/main/java/ /src/test/java/ SuspiciousCodePositions/BearsPFL/B42.txt withgit bears /home/gynther/.m2/repository/org/eclipse/,D4J/projects/Bears-42/target/,/home/gynther/.m2/repository/javax/ bears2
+
+mvn install && rm target/dependency/TBar-0.0.1-SNAPSHOT.jar && cp target/TBar-0.0.1-SNAPSHOT.jar target/dependency/ && ./NormalFLTBarRunner.sh D4J/projects/ Bears-46 /target/classes/ /target/test-classes/ /src/main/java/ /src/test/java/ SuspiciousCodePositions/BearsPFL/B46.txt withgit bears /home/gynther/.m2/repository/org/eclipse/,D4J/projects/Bears-46/target/,/home/gynther/.m2/repository/javax/ bears2
+
+
+ ******
+
+mvn install && rm target/dependency/TBar-0.0.1-SNAPSHOT.jar && cp target/TBar-0.0.1-SNAPSHOT.jar target/dependency/ && ./NormalFLTBarRunner.sh D4J/projects/ Bears-109 /target/classes/ /target/test-classes/ /src/main/java/ /src/test/java/ SuspiciousCodePositions/BearsPFL/B109.txt withgit bears none normal
 
 */																																																															
 
@@ -65,17 +99,31 @@ public class Main {
 		//String incomingDeps = "/home/gynther/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.7.8/";
 		String incomingDeps = args[9];
 
+		String readTests = args[10]; //normal or bears2
 
-		String[] arrSplit = incomingDeps.split(", ");
+
+
+		String[] arrSplit = incomingDeps.split(",");
 		for (int i=0; i < arrSplit.length; i++)
 		{
+			//System.err.println(arrSplit[i]);
 			Configuration.additionalDepsFromCmdLine.add(arrSplit[i]);
 		}
+		//System.exit(0);
+
+		if(readTests.equals("bears2"))
+		{
+			Configuration.testOutputAdapter_for="bears2";
+		}
+		else{
+			Configuration.testOutputAdapter_for="bears";
+		}
+
 
 		//print shell output
-		Configuration.ShellVerbose=false;
-		Configuration.testVerbose=false;
-		Configuration.testOutputAdapter_for="bears2";
+		Configuration.ShellVerbose=true;
+		Configuration.testVerbose=true;
+		//Configuration.testOutputAdapter_for="bears";
 	
 
 

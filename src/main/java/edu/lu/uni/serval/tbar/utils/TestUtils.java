@@ -134,7 +134,7 @@ public static int getFailTestNumInProjectBears2(String projectName, List<String>
         lineCount++;
         if(Configuration.testVerbose)
         {
-        System.err.println(st); 
+            System.err.println(st); 
         }
         
 
@@ -355,14 +355,24 @@ public static int getFailTestNumInProjectBears2(String projectName, List<String>
         while ((st = br.readLine()) != null)
         {
             lineCount++;
-            System.err.println(st); 
+
+            if(Configuration.testVerbose)
+            {
+                System.err.println(st); 
+            }
+    
 
             //Failed tests
             if(readFailedtests && !st.trim().isEmpty()) //2. Read the lines
             {
                 String[] splittedStrings = st.trim().split("\\(");
-                System.err.println(splittedStrings[0]);
-                System.err.println(splittedStrings[1]);
+
+                if(Configuration.testVerbose)
+                {
+                    System.err.println(splittedStrings[0]);
+                    System.err.println(splittedStrings[1]);
+                }
+    
                 String[] splittedStringsClass = splittedStrings[1].trim().split("\\)");
 
                 
@@ -388,8 +398,14 @@ public static int getFailTestNumInProjectBears2(String projectName, List<String>
             if(readErrortests && !st.trim().isEmpty()) //2. Read the lines
             {
                 String[] splittedStringsE = st.trim().split("\\(");
-                System.err.println(splittedStringsE[0]);
-                System.err.println(splittedStringsE[1]);
+
+                if(Configuration.testVerbose)
+                {
+                    System.err.println(splittedStringsE[0]);
+                    System.err.println(splittedStringsE[1]);
+                    }
+
+
                 String[] splittedStringsClassE = splittedStringsE[1].trim().split("\\)");
 
                 
@@ -397,8 +413,13 @@ public static int getFailTestNumInProjectBears2(String projectName, List<String>
                 //String testClassE = splittedStringsE[1].replaceAll("[()]", "");
                 String testClassE = splittedStringsClassE[0].trim();
 
-                System.err.println(testIndividualE);
-                System.err.println(testClassE);
+
+                if(Configuration.testVerbose)
+                {
+                    System.err.println(testIndividualE);
+                    System.err.println(testClassE);
+                }
+
 
                 errorTestCmdLine.add(testClassE+"::"+testIndividualE);
             }

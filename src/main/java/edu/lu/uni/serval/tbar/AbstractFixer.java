@@ -97,8 +97,6 @@ public abstract class AbstractFixer implements IFixer {
 
 
 
-
-
 		/*if (minErrorTest == Integer.MAX_VALUE) {
 			TestUtils.getFailTestNumInProject(fullBuggyProjectPath, defects4jPath, failedTestStrList);
 			minErrorTest = TestUtils.getFailTestNumInProject(fullBuggyProjectPath, defects4jPath, failedTestStrList);
@@ -112,8 +110,11 @@ public abstract class AbstractFixer implements IFixer {
 		dp.prepareData(buggyProject,pathsFromCmdLine);
 
 
+		//System.exit(0);
 		
 		//readPreviouslyFailedTestCases();
+
+		readFailedTestCasesOnceFromfailedTestStrList();
 		
 //		createDictionary();
 	}
@@ -150,6 +151,39 @@ public abstract class AbstractFixer implements IFixer {
 		// We call them as fake failed-passing test cases.
 		this.fakeFailedTestCasesList.addAll(tempFailed);
 	}*/
+
+	private void readFailedTestCasesOnceFromfailedTestStrList() {
+		//String[] failedTestCases = FileHelper.readFile(Configuration.failedTestCasesFilePath + this.buggyProject + ".txt").split("\n");
+		List<String> failedTestCasesList = new ArrayList<>();
+		List<String> failed = new ArrayList<>();
+		//System.err.println("START readFailedTestCasesOnceFromfailedTestStrList() ------------------------------------------------<");
+		for (int index = 0, length = failedTestStrList.size(); index < length; index ++) {
+			// - org.jfree.data.general.junit.DatasetUtilitiesTests::testBug2849731_2
+			String failedTestCase = failedTestStrList.get(index).trim();
+			//System.err.println("ForLoop:"+failedTestCase);
+			failed.add(failedTestCase);
+			//failedTestCase = failedTestCase.substring(failedTestCase.indexOf("-") + 1).trim();
+			//failedTestCasesStrList.add(failedTestCase);
+			int colonIndex = failedTestCase.indexOf("::");
+			if (colonIndex > 0) {
+				failedTestCase = failedTestCase.substring(0, colonIndex);
+				//System.err.println(failedTestCase);
+			}
+			if (!failedTestCasesList.contains(failedTestCase)) {
+				this.failedTestCaseClasses += failedTestCase + " ";
+				failedTestCasesList.add(failedTestCase);
+			}
+		}
+		
+		List<String> tempFailed = new ArrayList<>();
+		tempFailed.addAll(this.failedTestStrList);
+		tempFailed.removeAll(failed);
+		// FIXME: Using defects4j command in Java code may generate some new failed-passing test cases.
+		// We call them as fake failed-passing test cases.
+		this.fakeFailedTestCasesList.addAll(tempFailed);
+
+		//System.exit(0);
+	}
 
 	@SuppressWarnings("unused")
 	private void createDictionary() {
@@ -341,7 +375,9 @@ public abstract class AbstractFixer implements IFixer {
 						results = ShellUtils.shellRun(Arrays.asList("java -cp "
 						+ PathUtils.buildTestClassPath(dp.classPath, dp.testClassPath, dp.libPaths)
 						+ " org.junit.runner.JUnitCore " + this.failedTestCaseClasses), buggyProject,2);
+				System.err.println("Results from tests:");
 				System.out.println(results);
+				//System.exit(0);
 			}
 
 
@@ -380,7 +416,7 @@ public abstract class AbstractFixer implements IFixer {
 			{
 				errorTestAfterFix = TestUtils.getFailTestNumInProjectBears2(fullBuggyProjectPath,failedTestStrList);
 			}
-			else{
+			else{ //normal
 				errorTestAfterFix = TestUtils.getFailTestNumInProject(fullBuggyProjectPath,failedTestStrList);
 			}
 	

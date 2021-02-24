@@ -28,7 +28,9 @@ public class DataPreparer {
     public List<String> libPaths = new ArrayList<>();
     public boolean validPaths = true;
     public String[] testCases;
-    public URL[] classPaths;
+	public URL[] classPaths;
+	public String additionaltest = "D4J/projects/Bears-27/spooned-classes/";
+	public String additionalnotest = "D4J/projects/Bears-27/spooned/";
     
     public DataPreparer(String path){
         if (!path.endsWith("/")){
@@ -43,15 +45,16 @@ public class DataPreparer {
 //		libPath.add(IOUtils.class.getProtectionDomain().getCodeSource().getLocation().getFile());
 		
 		loadPaths(buggyProject,pathsFromCmdLine);
-		
+
 		if (!checkProjectDirectories()){
 			validPaths = false;
 			return;
 		}
-		
+
 		loadTestCases();
-		
+
 		loadClassPaths();
+
     }
 
 	private void loadPaths(String buggyProject,ArrayList<String> pathsFromCmdLine) {
@@ -69,6 +72,9 @@ public class DataPreparer {
 		testClassPath = projectDir + buggyProject + paths.get(1);
 		srcPath = projectDir + buggyProject + paths.get(2);
 		testSrcPath = projectDir + buggyProject + paths.get(3);
+
+		//System.out.println("testClassPath: "+testClassPath);
+		//System.exit(0);
 
 		List<File> libPackages = new ArrayList<>();
 		if (new File(projectDir + buggyProject + "/lib/").exists()) {
@@ -92,6 +98,8 @@ public class DataPreparer {
 			libPackages.addAll(FileHelper.getAllFiles(projectDir + buggyProject + "/target/lib/", ".jar"));
 			//System.err.println("libPackages Exist");
 		}
+
+
 
 		//Get Additional dependencies
 		for (int i=0; i < Configuration.additionalDepsFromCmdLine.size(); i++)
@@ -136,7 +144,9 @@ public class DataPreparer {
 	}
 
 	private void loadTestCases() {
+		//testCases = new TestClassesFinder().findIn(JavaLibrary.classPathFrom(testClassPath + ":" + classPath+":"+additionaltest+":"+additionalnotest), false);
 		testCases = new TestClassesFinder().findIn(JavaLibrary.classPathFrom(testClassPath + ":" + classPath), false);
+
 //		List<File> testCasesFiles = FileHelper.getAllFiles(testClassPath, ".class");
 ////		testCasesFiles.addAll(FileHelper.getAllFiles(testClassPath, "Tests.class"));
 //		StringBuilder b = new StringBuilder();
@@ -160,6 +170,8 @@ public class DataPreparer {
 	private void loadClassPaths() {
 		classPaths = JavaLibrary.classPathFrom(testClassPath);
 		classPaths = JavaLibrary.extendClassPathWith(classPath, classPaths);
+		//classPaths = JavaLibrary.extendClassPathWith(additionaltest, classPaths); // nytt
+		//classPaths = JavaLibrary.extendClassPathWith(additionalnotest, classPaths); // nytt
 		if (libPaths != null) {
 			for (String lpath : libPaths) {
 				classPaths = JavaLibrary.extendClassPathWith(lpath, classPaths);
