@@ -15,39 +15,66 @@ import java.util.ArrayList;
  */
 
  /* Bears-98
-xmvn install && rm target/dependency/TBar-0.0.1-SNAPSHOT.jar && cp target/TBar-0.0.1-SNAPSHOT.jar target/dependency/ && ./NormalFLTBarRunner.sh D4J/projects/ Bears-98 /target/classes/ /target/test-classes/ /src/ /test/ SuspiciousCodePositions/BearsPFL/B98.txt withgit bears none normal
+xmvn install && rm target/dependency/TBar-0.0.1-SNAPSHOT.jar && cp target/TBar-0.0.1-SNAPSHOT.jar target/dependency/ && ./NormalFLTBarRunner.sh D4J/projects/ Bears-98 /target/classes/ /target/test-classes/ /src/ /test/ SuspiciousCodePositions/BearsPFL/B98.txt withgit bears none normal no_local_test
  
 Bears-2
-xmvn install && rm target/dependency/TBar-0.0.1-SNAPSHOT.jar && cp target/TBar-0.0.1-SNAPSHOT.jar target/dependency/ && ./NormalFLTBarRunner.sh D4J/projects/ Bears-2 /target/classes/ /target/test-classes/ /src/main/java/ /src/test/java/ SuspiciousCodePositions/BearsPFL/B2.txt withgit bears /home/gynther/.m2/repository/com/fasterxml/ bears2
+mvn install && rm target/dependency/TBar-0.0.1-SNAPSHOT.jar && cp target/TBar-0.0.1-SNAPSHOT.jar target/dependency/ && ./NormalFLTBarRunner.sh D4J/projects/ Bears-2 /target/classes/ /target/test-classes/ /src/main/java/ /src/test/java/ SuspiciousCodePositions/BearsPFL/B2.txt withgit bears /home/gynther/.m2/repository/com/fasterxml/ bears2 no_local_test
 
 
-xmvn install && rm target/dependency/TBar-0.0.1-SNAPSHOT.jar && cp target/TBar-0.0.1-SNAPSHOT.jar target/dependency/ && ./NormalFLTBarRunner.sh D4J/projects/ Bears-3 /target/classes/ /target/test-classes/ /src/main/java/ /src/test/java/ SuspiciousCodePositions/BearsPFL/B3.txt withgit bears /home/gynther/.m2/repository/com/fasterxml/ bears2
+xmvn install && rm target/dependency/TBar-0.0.1-SNAPSHOT.jar && cp target/TBar-0.0.1-SNAPSHOT.jar target/dependency/ && ./NormalFLTBarRunner.sh D4J/projects/ Bears-3 /target/classes/ /target/test-classes/ /src/main/java/ /src/test/java/ SuspiciousCodePositions/BearsPFL/B3.txt withgit bears /home/gynther/.m2/repository/com/fasterxml/ bears2 no_local_test
 
 
-XcORRECT mvn install && rm target/dependency/TBar-0.0.1-SNAPSHOT.jar && cp target/TBar-0.0.1-SNAPSHOT.jar target/dependency/ && ./NormalFLTBarRunner.sh D4J/projects/ Bears-5 /target/classes/ /target/test-classes/ /src/main/java/ /src/test/java/ SuspiciousCodePositions/BearsPFL/B5.txt withgit bears /home/gynther/.m2/repository/com/fasterxml/ bears2
+XcORRECT mvn install && rm target/dependency/TBar-0.0.1-SNAPSHOT.jar && cp target/TBar-0.0.1-SNAPSHOT.jar target/dependency/ && ./NormalFLTBarRunner.sh D4J/projects/ Bears-5 /target/classes/ /target/test-classes/ /src/main/java/ /src/test/java/ SuspiciousCodePositions/BearsPFL/B5.txt withgit bears /home/gynther/.m2/repository/com/fasterxml/ bears2 no_local_test
 
-X mvn install && rm target/dependency/TBar-0.0.1-SNAPSHOT.jar && cp target/TBar-0.0.1-SNAPSHOT.jar target/dependency/ && ./NormalFLTBarRunner.sh D4J/projects/ Bears-8 /target/classes/ /target/test-classes/ /src/main/java/ /src/test/java/ SuspiciousCodePositions/BearsPFL/B8.txt withgit bears /home/gynther/.m2/repository/com/fasterxml/ bears2
+X mvn install && rm target/dependency/TBar-0.0.1-SNAPSHOT.jar && cp target/TBar-0.0.1-SNAPSHOT.jar target/dependency/ && ./NormalFLTBarRunner.sh D4J/projects/ Bears-8 /target/classes/ /target/test-classes/ /src/main/java/ /src/test/java/ SuspiciousCodePositions/BearsPFL/B8.txt withgit bears /home/gynther/.m2/repository/com/fasterxml/ bears2 no_local_test
 
- FEL DEPENDENCIE FUNKAR EJ-mvn install && rm target/dependency/TBar-0.0.1-SNAPSHOT.jar && cp target/TBar-0.0.1-SNAPSHOT.jar target/dependency/ && ./NormalFLTBarRunner.sh D4J/projects/ Bears-12 /target/classes/ /target/test-classes/ /src/main/java/ /src/test/java/ SuspiciousCodePositions/BearsPFL/B12.txt withgit bears /home/gynther/.m2/repository/com/fasterxml/ bears2
+????? FEL DEPENDENCIE FUNKAR EJ-mvn install && rm target/dependency/TBar-0.0.1-SNAPSHOT.jar && cp target/TBar-0.0.1-SNAPSHOT.jar target/dependency/ && ./NormalFLTBarRunner.sh D4J/projects/ Bears-12 /target/classes/ /target/test-classes/ /src/main/java/ /src/test/java/ SuspiciousCodePositions/BearsPFL/B12.txt withgit bears /home/gynther/.m2/repository/com/fasterxml/ bears2 no_local_test
 
-x mvn install && rm target/dependency/TBar-0.0.1-SNAPSHOT.jar && cp target/TBar-0.0.1-SNAPSHOT.jar target/dependency/ && ./NormalFLTBarRunner.sh D4J/projects/ Bears-19 /target/classes/ /target/test-classes/ /src/main/java/ /src/test/java/ SuspiciousCodePositions/BearsPFL/B19.txt withgit bears /home/gynther/.m2/repository/com/fasterxml/ bears2
+x mvn install && rm target/dependency/TBar-0.0.1-SNAPSHOT.jar && cp target/TBar-0.0.1-SNAPSHOT.jar target/dependency/ && ./NormalFLTBarRunner.sh D4J/projects/ Bears-19 /target/classes/ /target/test-classes/ /src/main/java/ /src/test/java/ SuspiciousCodePositions/BearsPFL/B19.txt withgit bears /home/gynther/.m2/repository/com/fasterxml/ bears2 no_local_test
 
----
+--- Spoon
 
-x Hittar ej fil mvn install && rm target/dependency/TBar-0.0.1-SNAPSHOT.jar && cp target/TBar-0.0.1-SNAPSHOT.jar target/dependency/ && ./NormalFLTBarRunner.sh D4J/projects/ Bears-27 /target/classes/ /target/test-classes/ /src/main/java/ /src/test/java/ SuspiciousCodePositions/BearsPFL/B27.txt withgit bears /home/gynther/.m2/repository/org/eclipse/,D4J/projects/Bears-27/target/,/home/gynther/.m2/repository/javax/ bears2
+ERROR x Hittar ej fil mvn install && rm target/dependency/TBar-0.0.1-SNAPSHOT.jar && cp target/TBar-0.0.1-SNAPSHOT.jar target/dependency/ && ./NormalFLTBarRunner.sh D4J/projects/ Bears-27 /target/classes/ /target/test-classes/ /src/main/java/ /src/test/java/ SuspiciousCodePositions/BearsPFL/B27.txt withgit bears /home/gynther/.m2/repository/org/eclipse/,D4J/projects/Bears-27/target/,/home/gynther/.m2/repository/javax/ bears2 testlocal
 
 HÄR BÖRJAT TA OMRÅDET RUNTOM: @ @ och metoden
 
 x mvn install && rm target/dependency/TBar-0.0.1-SNAPSHOT.jar && cp target/TBar-0.0.1-SNAPSHOT.jar target/dependency/ && ./NormalFLTBarRunner.sh D4J/projects/ Bears-32 /target/classes/ /target/test-classes/ /src/main/java/ /src/test/java/ SuspiciousCodePositions/BearsPFL/B32.txt withgit bears /home/gynther/.m2/repository/org/eclipse/,D4J/projects/Bears-27/target/,/home/gynther/.m2/repository/javax/ bears2
 
-Denna is fixed med cd test24/2 - mvn install && rm target/dependency/TBar-0.0.1-SNAPSHOT.jar && cp target/TBar-0.0.1-SNAPSHOT.jar target/dependency/ && ./NormalFLTBarRunner.sh D4J/projects/ Bears-36 /target/classes/ /target/test-classes/ /src/main/java/ /src/test/java/ SuspiciousCodePositions/BearsPFL/B36.txt withgit bears /home/gynther/.m2/repository/org/eclipse/,D4J/projects/Bears-36/target/,/home/gynther/.m2/repository/javax/ bears2
+x Denna is fixed med cd test24/2 - mvn install && rm target/dependency/TBar-0.0.1-SNAPSHOT.jar && cp target/TBar-0.0.1-SNAPSHOT.jar target/dependency/ && ./NormalFLTBarRunner.sh D4J/projects/ Bears-36 /target/classes/ /target/test-classes/ /src/main/java/ /src/test/java/ SuspiciousCodePositions/BearsPFL/B36.txt withgit bears /home/gynther/.m2/repository/org/eclipse/,D4J/projects/Bears-36/target/,/home/gynther/.m2/repository/javax/ bears2 testlocal
 
 
-mvn install && rm target/dependency/TBar-0.0.1-SNAPSHOT.jar && cp target/TBar-0.0.1-SNAPSHOT.jar target/dependency/ && ./NormalFLTBarRunner.sh D4J/projects/ Bears-38 /target/classes/ /target/test-classes/ /src/main/java/ /src/test/java/ SuspiciousCodePositions/BearsPFL/B38.txt withgit bears /home/gynther/.m2/repository/org/eclipse/,D4J/projects/Bears-38/target/,/home/gynther/.m2/repository/javax/ bears2
+X mvn install && rm target/dependency/TBar-0.0.1-SNAPSHOT.jar && cp target/TBar-0.0.1-SNAPSHOT.jar target/dependency/ && ./NormalFLTBarRunner.sh D4J/projects/ Bears-38 /target/classes/ /target/test-classes/ /src/main/java/ /src/test/java/ SuspiciousCodePositions/BearsPFL/B38.txt withgit bears /home/gynther/.m2/repository/org/eclipse/,D4J/projects/Bears-38/target/,/home/gynther/.m2/repository/javax/ bears2 testlocal
 
-mvn install && rm target/dependency/TBar-0.0.1-SNAPSHOT.jar && cp target/TBar-0.0.1-SNAPSHOT.jar target/dependency/ && ./NormalFLTBarRunner.sh D4J/projects/ Bears-42 /target/classes/ /target/test-classes/ /src/main/java/ /src/test/java/ SuspiciousCodePositions/BearsPFL/B42.txt withgit bears /home/gynther/.m2/repository/org/eclipse/,D4J/projects/Bears-42/target/,/home/gynther/.m2/repository/javax/ bears2
+x mvn install && rm target/dependency/TBar-0.0.1-SNAPSHOT.jar && cp target/TBar-0.0.1-SNAPSHOT.jar target/dependency/ && ./NormalFLTBarRunner.sh D4J/projects/ Bears-42 /target/classes/ /target/test-classes/ /src/main/java/ /src/test/java/ SuspiciousCodePositions/BearsPFL/B42.txt withgit bears /home/gynther/.m2/repository/org/eclipse/,D4J/projects/Bears-42/target/,/home/gynther/.m2/repository/javax/ bears2 testlocal
 
-mvn install && rm target/dependency/TBar-0.0.1-SNAPSHOT.jar && cp target/TBar-0.0.1-SNAPSHOT.jar target/dependency/ && ./NormalFLTBarRunner.sh D4J/projects/ Bears-46 /target/classes/ /target/test-classes/ /src/main/java/ /src/test/java/ SuspiciousCodePositions/BearsPFL/B46.txt withgit bears /home/gynther/.m2/repository/org/eclipse/,D4J/projects/Bears-46/target/,/home/gynther/.m2/repository/javax/ bears2
+x mvn install && rm target/dependency/TBar-0.0.1-SNAPSHOT.jar && cp target/TBar-0.0.1-SNAPSHOT.jar target/dependency/ && ./NormalFLTBarRunner.sh D4J/projects/ Bears-46 /target/classes/ /target/test-classes/ /src/main/java/ /src/test/java/ SuspiciousCodePositions/BearsPFL/B46.txt withgit bears /home/gynther/.m2/repository/org/eclipse/,D4J/projects/Bears-46/target/,/home/gynther/.m2/repository/javax/ bears2 testlocal
+
+xmvn install && rm target/dependency/TBar-0.0.1-SNAPSHOT.jar && cp target/TBar-0.0.1-SNAPSHOT.jar target/dependency/ && ./NormalFLTBarRunner.sh D4J/projects/ Bears-49 /target/classes/ /target/test-classes/ /src/main/java/ /src/test/java/ SuspiciousCodePositions/BearsPFL/B49.txt withgit bears /home/gynther/.m2/repository/org/eclipse/,D4J/projects/Bears-49/target/,/home/gynther/.m2/repository/javax/ bears2 testlocal
+
+x mvn install && rm target/dependency/TBar-0.0.1-SNAPSHOT.jar && cp target/TBar-0.0.1-SNAPSHOT.jar target/dependency/ && ./NormalFLTBarRunner.sh D4J/projects/ Bears-53 /target/classes/ /target/test-classes/ /src/main/java/ /src/test/java/ SuspiciousCodePositions/BearsPFL/B53.txt withgit bears /home/gynther/.m2/repository/org/eclipse/,D4J/projects/Bears-53/target/,/home/gynther/.m2/repository/javax/ bears2 testlocal
+
+x - funkar ok men kanske fixar error men failure felet som inte kan importa - mvn install && rm target/dependency/TBar-0.0.1-SNAPSHOT.jar && cp target/TBar-0.0.1-SNAPSHOT.jar target/dependency/ && ./NormalFLTBarRunner.sh D4J/projects/ Bears-56 /target/classes/ /target/test-classes/ /src/main/java/ /src/test/java/ SuspiciousCodePositions/BearsPFL/B56.txt withgit bears /home/gynther/.m2/repository/org/eclipse/,D4J/projects/Bears-56/target/,/home/gynther/.m2/repository/javax/ bears2 testlocal
+
+x - kanske impotfail - mvn install && rm target/dependency/TBar-0.0.1-SNAPSHOT.jar && cp target/TBar-0.0.1-SNAPSHOT.jar target/dependency/ && ./NormalFLTBarRunner.sh D4J/projects/ Bears-61 /target/classes/ /target/test-classes/ /src/main/java/ /src/test/java/ SuspiciousCodePositions/BearsPFL/B61.txt withgit bears /home/gynther/.m2/repository/org/eclipse/,D4J/projects/Bears-61/target/,/home/gynther/.m2/repository/javax/ bears2 testlocal
+
+x mvn install && rm target/dependency/TBar-0.0.1-SNAPSHOT.jar && cp target/TBar-0.0.1-SNAPSHOT.jar target/dependency/ && ./NormalFLTBarRunner.sh D4J/projects/ Bears-70 /target/classes/ /target/test-classes/ /src/main/java/ /src/test/java/ SuspiciousCodePositions/BearsPFL/B70.txt withgit bears /home/gynther/.m2/repository/org/eclipse/,D4J/projects/Bears-70/target/,/home/gynther/.m2/repository/javax/ bears2 testlocal
+
+mvn install && rm target/dependency/TBar-0.0.1-SNAPSHOT.jar && cp target/TBar-0.0.1-SNAPSHOT.jar target/dependency/ && ./NormalFLTBarRunner.sh D4J/projects/ Bears-73 /target/classes/ /target/test-classes/ /src/main/java/ /src/test/java/ SuspiciousCodePositions/BearsPFL/B73.txt withgit bears /home/gynther/.m2/repository/org/eclipse/,D4J/projects/Bears-73/target/,/home/gynther/.m2/repository/javax/ bears2 testlocal
+
+mvn install && rm target/dependency/TBar-0.0.1-SNAPSHOT.jar && cp target/TBar-0.0.1-SNAPSHOT.jar target/dependency/ && ./NormalFLTBarRunner.sh D4J/projects/ Bears-76 /target/classes/ /target/test-classes/ /src/main/java/ /src/test/java/ SuspiciousCodePositions/BearsPFL/B76.txt withgit bears /home/gynther/.m2/repository/org/eclipse/,D4J/projects/Bears-76/target/,/home/gynther/.m2/repository/javax/ bears2 testlocal
+
+mvn install && rm target/dependency/TBar-0.0.1-SNAPSHOT.jar && cp target/TBar-0.0.1-SNAPSHOT.jar target/dependency/ && ./NormalFLTBarRunner.sh D4J/projects/ Bears-78 /target/classes/ /target/test-classes/ /src/main/java/ /src/test/java/ SuspiciousCodePositions/BearsPFL/B78.txt withgit bears /home/gynther/.m2/repository/org/eclipse/,D4J/projects/Bears-78/target/,/home/gynther/.m2/repository/javax/ bears2 testlocal
+
+------------------ spring-projects-spring-data-commons 
+
+mvn install && rm target/dependency/TBar-0.0.1-SNAPSHOT.jar && cp target/TBar-0.0.1-SNAPSHOT.jar target/dependency/ && ./NormalFLTBarRunner.sh D4J/projects/ Bears-87 /target/classes/ /target/test-classes/ /src/main/java/ /src/test/java/ SuspiciousCodePositions/BearsPFL/B87.txt withgit bears /home/gynther/.m2/repository/org/projectlombok/,/home/gynther/.m2/repository/io/javaslang/,/home/gynther/.m2/repository/com/google/,/home/gynther/.m2/repository/io/,/home/gynther/.m2/repository/org/scala-lang/,/home/gynther/.m2/repository/org/springframework/ bears2 no_local_test
+
+mvn install && rm target/dependency/TBar-0.0.1-SNAPSHOT.jar && cp target/TBar-0.0.1-SNAPSHOT.jar target/dependency/ && ./NormalFLTBarRunner.sh D4J/projects/ Bears-88 /target/classes/ /target/test-classes/ /src/main/java/ /src/test/java/ SuspiciousCodePositions/BearsPFL/B88.txt withgit bears /home/gynther/.m2/repository/org/projectlombok/,/home/gynther/.m2/repository/io/javaslang/,/home/gynther/.m2/repository/com/google/,/home/gynther/.m2/repository/io/,/home/gynther/.m2/repository/org/scala-lang/,/home/gynther/.m2/repository/org/springframework/,/home/gynther/.m2/repository/org/apache/,BearsDeps/lib/ bears2 no_local_test
+
+mvn install && rm target/dependency/TBar-0.0.1-SNAPSHOT.jar && cp target/TBar-0.0.1-SNAPSHOT.jar target/dependency/ && ./NormalFLTBarRunner.sh D4J/projects/ Bears-95 /target/classes/ /target/test-classes/ /src/main/java/ /src/test/java/ SuspiciousCodePositions/BearsPFL/B95.txt withgit bears /home/gynther/.m2/repository/org/projectlombok/,/home/gynther/.m2/repository/io/javaslang/,/home/gynther/.m2/repository/com/google/,/home/gynther/.m2/repository/io/,/home/gynther/.m2/repository/org/scala-lang/,/home/gynther/.m2/repository/org/springframework/,/home/gynther/.m2/repository/org/apache/,BearsDeps/lib/ bears2 no_local_test
+
+
+x - kankse fel? lägg in maven?- mvn install && rm target/dependency/TBar-0.0.1-SNAPSHOT.jar && cp target/TBar-0.0.1-SNAPSHOT.jar target/dependency/ && ./NormalFLTBarRunner.sh D4J/projects/ Bears-90 /target/classes/ /target/test-classes/ /src/main/java/ /src/test/java/ SuspiciousCodePositions/BearsPFL/B90.txt withgit bears /home/gynther/.m2/repository/org/projectlombok/,/home/gynther/.m2/repository/io/javaslang/,/home/gynther/.m2/repository/com/google/,/home/gynther/.m2/repository/io/,/home/gynther/.m2/repository/org/scala-lang/,/home/gynther/.m2/repository/org/springframework/,/home/gynther/.m2/repository/org/apache/,BearsDeps/lib/ bears2 no_local_test
 
 
  ******
@@ -58,7 +85,7 @@ mvn install && rm target/dependency/TBar-0.0.1-SNAPSHOT.jar && cp target/TBar-0.
 
   /* Lang_33 d4j
 mvn install && rm target/dependency/TBar-0.0.1-SNAPSHOT.jar && cp target/TBar-0.0.1-SNAPSHOT.jar target/dependency/ && ./NormalFLTBarRunner.sh D4J/projects/ Lang_33 /target/classes/ /target/test-classes/ /src/main/java/ /src/test/java/ SuspiciousCodePositions/Lang_33/Ochiai.txt withgit
- */																																																				//org			//org											
+ */																																																	//org			//org											
 
 public class Main {
 	
@@ -101,7 +128,12 @@ public class Main {
 
 		String readTests = args[10]; //normal or bears2
 
+		String runTestLocally = args[11]; //run tests locally
 
+		if(runTestLocally.equals("testlocal"))
+		{
+			Configuration.run_tests_locally=true;
+		}
 
 		String[] arrSplit = incomingDeps.split(",");
 		for (int i=0; i < arrSplit.length; i++)

@@ -15,7 +15,7 @@ public class Configuration {
 	public static boolean testVerbose = false;
 	public static String testOutputAdapter_for="bears";
 	public static String bugDataSet = "bears"; // d4j or bears
-
+	public static boolean run_tests_locally = false;
 
 	public static List<String> additionalDepsFromCmdLine = new ArrayList<>();
 

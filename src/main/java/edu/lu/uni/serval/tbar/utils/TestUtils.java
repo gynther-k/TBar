@@ -655,7 +655,18 @@ public static int getFailTestNumInProjectBears2(String projectName, List<String>
 	public static String checkout(String projectName) {
 		try {
 			String buggyProject = projectName.substring(projectName.lastIndexOf("/") + 1);
-            return ShellUtils.shellRun(Arrays.asList("cd " + projectName + "\n", "git checkout -- ."), buggyProject, 1).trim();
+            //return ShellUtils.shellRun(Arrays.asList("cd " + projectName + "\n", "git checkout -- ."), buggyProject, 1).trim();
+
+            if (Configuration.NO_GIT)
+            {
+                return ShellUtils.shellRun(Arrays.asList("cd " + projectName), buggyProject, 1).trim();
+
+            }
+            else{
+                return ShellUtils.shellRun(Arrays.asList("cd " + projectName + "\n", "git checkout -- ."), buggyProject, 1).trim();
+
+            }
+
         } catch (IOException e){
             return null;
         }
