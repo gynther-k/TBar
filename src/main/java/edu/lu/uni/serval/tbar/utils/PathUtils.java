@@ -2,6 +2,8 @@ package edu.lu.uni.serval.tbar.utils;
 
 import java.util.ArrayList;
 import java.util.List;
+import edu.lu.uni.serval.tbar.config.Configuration;
+
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -112,6 +114,13 @@ public class PathUtils {
 		StringBuilder path = new StringBuilder("\"");
 		path.append(classPath);
 		path.append(System.getProperty("path.separator"));
+
+		for (String addclasspath : Configuration.additionalClasspathsFromCmdLine) {
+			path.append(addclasspath);
+			path.append(System.getProperty("path.separator"));
+		}
+
+
 		path.append(testClassPath);
 		path.append(System.getProperty("path.separator"));
 		path.append(JunitRunner.class.getProtectionDomain().getCodeSource().getLocation().getFile());
@@ -148,6 +157,12 @@ public class PathUtils {
 		StringBuilder path = new StringBuilder("\"");
 		path.append(classPath);
 		path.append(System.getProperty("path.separator"));
+
+		for (String addclasspath : Configuration.additionalClasspathsFromCmdLine) {
+			path.append(addclasspath);
+			path.append(System.getProperty("path.separator"));
+		}
+
 		path.append(testClassPath);
 		path.append(System.getProperty("path.separator"));
 

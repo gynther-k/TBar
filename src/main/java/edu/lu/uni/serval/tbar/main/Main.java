@@ -6,6 +6,7 @@ import edu.lu.uni.serval.tbar.AbstractFixer;
 import edu.lu.uni.serval.tbar.TBarFixer;
 import edu.lu.uni.serval.tbar.config.Configuration;
 import java.util.ArrayList;
+import java.io.*;
 
 /**
  * Fix bugs with Fault Localization results.
@@ -14,9 +15,13 @@ import java.util.ArrayList;
  *
  */
 
+ /*
+AdditonalClasspaths: AdditionalClasspaths/B98.txt
+ */
+
  /* 
 Bears-2
-mvn install && rm target/dependency/TBar-0.0.1-SNAPSHOT.jar && cp target/TBar-0.0.1-SNAPSHOT.jar target/dependency/ && ./NormalFLTBarRunner.sh D4J/projects/ Bears-2 /target/classes/ /target/test-classes/ /src/main/java/ /src/test/java/ SuspiciousCodePositions/BearsPFL/B2.txt withgit bears /home/gynther/.m2/repository/com/fasterxml/ bears2 no_local_test
+mvn install && rm target/dependency/TBar-0.0.1-SNAPSHOT.jar && cp target/TBar-0.0.1-SNAPSHOT.jar target/dependency/ && ./NormalFLTBarRunner.sh D4J/projects/ Bears-2 /target/classes/ /target/test-classes/ /src/main/java/ /src/test/java/ SuspiciousCodePositions/BearsPFL/B2.txt withgit bears /home/gynther/.m2/repository/com/fasterxml/ bears2 no_local_test noneclasspath
 
 
 xmvn install && rm target/dependency/TBar-0.0.1-SNAPSHOT.jar && cp target/TBar-0.0.1-SNAPSHOT.jar target/dependency/ && ./NormalFLTBarRunner.sh D4J/projects/ Bears-3 /target/classes/ /target/test-classes/ /src/main/java/ /src/test/java/ SuspiciousCodePositions/BearsPFL/B3.txt withgit bears /home/gynther/.m2/repository/com/fasterxml/ bears2 no_local_test
@@ -84,7 +89,6 @@ x mvn install && rm target/dependency/TBar-0.0.1-SNAPSHOT.jar && cp target/TBar-
 
 
 
-
 mvn install && rm target/dependency/TBar-0.0.1-SNAPSHOT.jar && cp target/TBar-0.0.1-SNAPSHOT.jar target/dependency/ && ./NormalFLTBarRunner.sh D4J/projects/ Bears-109 /target/classes/ /target/test-classes/ /src/main/java/ /src/test/java/ SuspiciousCodePositions/BearsPFL/B109.txt withgit bears none normal
 
 */																																																															
@@ -135,10 +139,32 @@ public class Main {
 
 		String runTestLocally = args[11]; //run tests locally
 
+		String additionclasspaths = args[12]; //run tests locally
+
+
 		if(runTestLocally.equals("testlocal"))
 		{
 			Configuration.run_tests_locally=true;
 		}
+
+		if(!additionclasspaths.equals("noneclasspath"))
+		{
+
+			try (BufferedReader br = new BufferedReader(new FileReader(additionclasspaths))) {
+				String line;
+				while ((line = br.readLine()) != null) {
+				   // process the line.
+				   Configuration.additionalClasspathsFromCmdLine.add(line);
+				}
+			}
+			catch(Exception e)
+			{
+				System.err.println("Could not find additional classpath file:"+additionclasspaths);
+				System.exit(0);
+			}
+			
+		}
+
 
 		String[] arrSplit = incomingDeps.split(",");
 		for (int i=0; i < arrSplit.length; i++)

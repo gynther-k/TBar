@@ -12,5 +12,6 @@ bearsord4j=$9
 incomingDeps=${10}
 readTests=${11}
 runtestLocal=${12}
+additionalClassPathsFile=${13}
 
-java -Xmx1g -cp "target/dependency/*" edu.lu.uni.serval.tbar.main.Main $bugDataPath $bugID $targetClasses $targetTestClasses $targetMainJava $targetTestJava $suspiciousCodeLoc $projectWithoutGit $bearsord4j $incomingDeps $readTests $runtestLocal
+java -Xmx1g -cp "target/dependency/*" edu.lu.uni.serval.tbar.main.Main $bugDataPath $bugID $targetClasses $targetTestClasses $targetMainJava $targetTestJava $suspiciousCodeLoc $projectWithoutGit $bearsord4j $incomingDeps $readTests $runtestLocal $additionalClassPathsFile

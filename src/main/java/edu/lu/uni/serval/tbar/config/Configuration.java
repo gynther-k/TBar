@@ -18,6 +18,7 @@ public class Configuration {
 	public static boolean run_tests_locally = false;
 
 	public static List<String> additionalDepsFromCmdLine = new ArrayList<>();
+	public static List<String> additionalClasspathsFromCmdLine = new ArrayList<>();
 
 
 	//public static final String TEMP_FILES_PATH = ".temp/";
